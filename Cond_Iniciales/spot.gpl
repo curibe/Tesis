@@ -1,0 +1,7 @@
+R=69173.0
+set parametric
+set size square
+set isosample 50,50
+set hidden
+#splot "InitStates.state" u 2:3:4 w p pt 7 ps 0.5 lc 1, R*cos(u)*sin(v),R*sin(u)*sin(v),R*cos(v) lc 3 lw 0.3
+splot R*cos(u)*sin(v),R*sin(u)*sin(v),R*cos(v) lc 3 lw 0.3

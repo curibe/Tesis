@@ -1,0 +1,52 @@
+import numpy as np
+import os
+import commands as cm
+
+'''
+def Bodydef(Name,Mass,State,filename):
+    f=open(filename)
+    print>>f,"""\
+	     hola	
+             como estas
+             bien gracias
+             """
+    f.close()   
+'''
+
+
+ 
+"""
+#####################
+#BODY 0:
+#####################
+body(
+Type=CENTRAL,
+Code="BODY1",
+Name="SUN",
+Mass=1.0*MSUN,
+ObjectClass=NORMALSTAR,
+Density=0.0,
+Radius=0.0,
+Frame="BODY1",
+Units=ORBITAL,
+Ep=EPOCH,
+State="0.0 0.0 0.0 0.0 0.0 0.0",
+Cartesian=np.array([0.0,0.0,0.0,0.0,0.0,0.0]),
+J2=0.0,J4=0.0,J6=0.0,
+CloseEncounter=1.0,
+ShowObject=1,
+Activate=1,
+),#COMMA MANDATORY
+"""
+    
+
+    
+#Bodydef("hola",2,1,"salida.txt")    
+
+f=open("salida.txt","w")
+print>>f,"""\
+hola	
+como estas
+bien gracias
+"""
+f.close()   

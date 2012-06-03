@@ -1,0 +1,1 @@
+splot "IoPos.dat" u 2:3:4 w l, "EPos.dat" u 2:3:4 w l, "GPos.dat" u 2:3:4 w l, "CPos.dat" u 2:3:4 w l

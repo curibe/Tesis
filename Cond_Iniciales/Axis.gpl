@@ -1,0 +1,44 @@
+reset
+R=71492.0
+unset arrow
+unset label
+set xyplane 0.0
+set size square
+set arrow from 0.0,0.0,0.0 to 1.0,0.0,0.0  lw 1.5
+set arrow from 0.0,0.0,0.0 to 0.0,1.0,0.0  lw 1.5
+set arrow from 0.0,0.0,0.0 to 0.0,0.0,1.0  lw 1.5
+
+set label at 1.1,0.0,0.0 'Xecl' 
+set label at 0.0,1.1,0.0 'Yecl' 
+set label at 0.0,0.0,1.1 'Zecl' 
+
+set arrow from 0.0,0.0,0.0 to -0.819972,0.572135,0.017539 ls 4 lw 1.5
+set arrow from 0.0,0.0,0.0 to -0.572223,-0.820098,0.000000 ls 4 lw 1.5
+set arrow from 0.0,0.0,0.0 to 0.014384,-0.010036,0.999846 ls 4 lw 1.5
+
+set label at -0.983967,0.686562,0.021047 'XI' tc lt 4 
+set label at -0.686667,-0.984118,0.000000 'yI' tc lt 4 
+set label at 0.017261,-0.012044,1.199815 'ZI' tc lt 4 
+
+set arrow from 0.0,0.0,0.0 to -0.819972,0.572135,0.017539 ls 3 lw 1.5
+set arrow from 0.0,0.0,0.0 to -0.566777,-0.807245,-0.164678 ls 3 lw 1.5
+set arrow from 0.0,0.0,0.0 to -0.080060,-0.144972,0.986191 ls 3 lw 1.5
+
+set label at -0.860971,0.600741,0.018416 'XA' tc lt 3 
+set label at -0.680132,-0.968694,-0.197614 'XA' tc lt 3 
+set label at -0.096072,-0.173967,1.183430 'XA' tc lt 3 
+
+set arrow from 0.0,0.0,0.0 to -0.074750,-0.458158,-0.885722 ls 5 lw 1.5
+
+set arrow from -0.074750,-0.458158,-0.885722 to -0.041646,-0.255258,-0.993470 ls 7 lw 1.5
+set arrow from -0.074750,-0.458158,-0.885722 to 0.154329,-0.495533,-0.885722 ls 7 lw 1.5
+set arrow from -0.074750,-0.458158,-0.885722 to -0.112125,-0.687238,-1.328583 ls 7 lw 1.5
+
+set arrow from -0.279326,-0.684624,-1.281780 to -0.074750,-0.458158,-0.885722 ls 8 lw 1.5
+
+set parametric
+set isosample 30,30
+set xlabel 'XECL'
+set ylabel 'YECL'
+set zlabel 'ZECL'
+splot cos(u)*sin(v),sin(u)*sin(v),cos(v) notitle  w d
