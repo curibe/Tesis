@@ -8,7 +8,6 @@ BODY1="JUPITER"
 
 # BODY 2
 BODY2 = "COMET"
-a: 1  b:2  c:3
-a: 3  b:4  c:7
-a: 5  b:6  c:11
-a: 7  b:8  c:15
+
+# CENTRAL
+CENTRAL = "SUN"

@@ -186,12 +186,12 @@ DSTEP_PERIODIC=100
 #EXPRESS TIME RELATIVE TO INTEGRATION START TIME
 TIME_RESPINTEGRATION="yes" """
 
-'''
+
 def loadDesc(filename):
-    D=dic()
+    D=dict()
     execfile(filename,{},D)
     return D
-
+'''
 def dic2list(DIC):
     L=DIC.keys()
     V=DIC.values()
@@ -256,7 +256,6 @@ Tdumps = %.2f
 """%(index,time['Unit'],time['Start'][index]/eval(unit),time['Start'][index],
      time['End']/eval(unit),time['End'],time['Output'],time['OutputElem'],time['Datadumps']))
     ofile.close()
-
 
 
 
