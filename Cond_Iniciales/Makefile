@@ -15,7 +15,7 @@ CFLAGS=  -c -Wall -O4 -I. -I/usr/include -I/usr/local/Orbital/cspice/include  -I
 EXE = Cond_Ini
 # EXE= JupiterSpice
 
-all: clean $(EXE) run
+all: clean $(EXE) #run
 
 $(EXE):
 	$(CC) $(CFLAGS) $@.cpp -o $@.o
@@ -24,8 +24,8 @@ $(EXE):
 clean:
 	rm -rf *.o $(EXE) *~
 
-#clean:
-#	rm -rf *.o $(EXE) JupiterSpice *~
+cleanbc:
+	rm -rf *.o *~ *.pos JupiterPos.dat
 
 run:
 	./$(EXE)

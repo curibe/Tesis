@@ -54,7 +54,7 @@
 
 using namespace std;
 
-int main()
+int main(int argc, char *argv[])
 {
 
 //VARIABLES BASICAS
@@ -73,7 +73,8 @@ int main()
   
   //  ConstSpiceChar *t_obs="19 JUL 2009 15:06:30.000";
   ConstSpiceChar *tinicial="19 JUL 2009 11:00:00.000";
-  ConstSpiceChar *tfinal="19 MAY 2009 00:00:00.000";
+  //ConstSpiceChar *tfinal="19 MAY 2009 00:00:00.000";
+  ConstSpiceChar *tfinal=argv[1];
   //   ConstSpiceChar *tmin="19 JUL 2009 09:00:00.000";
   ConstSpiceChar *tmin="19 JUL 2009 09:00:00.000";
 

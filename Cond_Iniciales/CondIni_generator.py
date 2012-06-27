@@ -310,7 +310,7 @@ def SRI2ECL(t,RJE,XJ,Vimp):
     
     
     #print " et: %e    xe: %e   ye: %e   ze: %e    vxe: %e    vye: %e   vze: %e"%(t,XmE[0],XmE[1],XmE[2],Vecl[0],Vecl[1],Vecl[2])    
-    print " et: %e r: %f  v: %f"%(t,mag(XmE),mag(Vecl))
+    #print " et: %e r: %f  v: %f"%(t,mag(XmE),mag(Vecl))
     '''
     #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     # PLOTS OF REFERENCE FRAMES

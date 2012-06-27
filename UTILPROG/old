@@ -1,0 +1,37 @@
+CC=g++
+CFLAGS_OPT=-O4
+SPICEPATH=cspice
+FLAGS=$(CFLAGS_OPT) -I. -I$(SPICEPATH)/include
+LIBPATH=$(SPICEPATH)/lib
+UTILPROGS=xyz2aei.out
+
+ifeq ($(ARCH),amd64)
+	CSPICE_LIBDIR=$(CSPICE_PREFIX)/lib64
+	EXT=e64
+endif
+ifeq ($(ARCH),generic)
+	CSPICE_LIBDIR=$(CSPICE_PREFIX)/lib64
+	EXT=e64
+endif
+
+SPICELIBS=$(CSPICE_LIBDIR)/cspice.a $(LIBPATH)/csupport.a
+LFLAGS=-lm $(SPICELIBS)
+
+
+all:$(UTILPROGS)
+	@echo "Compiling all..." $^
+
+install:
+	cp -rf $(UTILPROGS:.out=) ../BIN
+
+
+%.out:%.o
+	@echo "Compiling..." $@
+	${CC} $< ${LFLAGS} -o $@
+	cp -rf $@ $(@:.out=)
+	mv $@ $(@:out=$(EXT))	
+
+clean:
+	@echo "Cleaning ...."
+	rm -rf *.out *.e* *~
+	rm -rf $(UTILPROGS:.out=)
