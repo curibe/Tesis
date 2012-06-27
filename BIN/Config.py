@@ -75,4 +75,8 @@ Bodyin=[
 ##############################
 # FILE NAME
 ##############################
+'''
+  Default: JupiterPos.dat
+  location: Tesis/Cond_Iniciales
+'''
 File="StateInit.probe"

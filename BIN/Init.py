@@ -3,7 +3,7 @@ import os
 import commands as cm
 from Jupiter import *
 from Config import *
-from ICond import *
+
 
 
 #==============
@@ -27,6 +27,15 @@ InitDir=Principal+"/Cond_Iniciales/"
 BinDir=Principal+"/BIN/"
 RunDir=Principal+"/RUNDIR/"
 
+
+#================================
+# TIME PARAMETERS
+#================================
+folder=os.getcwd()
+filename=folder + "/Cond_Iniciales/TimeIni.txt"
+ET0,ETF,Tmin,ET_obs,DeltaT=np.loadtxt(filename)
+
+
 #===========================
 # CREATING RUN DIRECTORIES
 #===========================
@@ -41,15 +50,9 @@ system("bash DirBuild.sh %d"%NDIR)
 
 
 
-
 #================================
 # CREATING CONFIGURATION FILES
 #================================
-
-#cmd="ls "+InitDir+"/*.pos"
-#filesPos=get(cmd)
-#N=len(filePos)
-
 
 
 # OPEN STATE FILES FOR EACH BODY

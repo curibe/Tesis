@@ -10,6 +10,8 @@ HOURS=3600.0
 DAYS=24*HOURS
 YEARS=365.25*DAYS
 AU=1.49597870700e8 
+RSOI=4.8305783e7
+RJUP=71492.0
 
 
 def BigBody(Body,State,ID,Flag):
@@ -225,34 +227,34 @@ def Description(time,index):
 #***************************
 # Time Unit: 
 #***************************
-Unit = %s
+Unit = "%s"
 
 #***************************
 # Time Start: 
 #***************************
-Tini = %f
+Start = %f
 #Tini = %e   # seconds
 
 #***************************
-# Time End
+# Time End:
 #***************************
-Tend = %f
+End = %f
 #Tend = %e  # seconds
 
 #*******************
 # Time Output: 
 #*******************
-Tout = %.2f
+Output = %.2f
 
 #*********************
 # Time OutputElem:
 #*********************
-TElm = %.2f
+OutElm = %.2f
 
 #*********************
 # Time Datadumps:  
 #*********************
-Tdumps = %.2f
+DataDumps = %.2f
 """%(index,time['Unit'],time['Start'][index]/eval(unit),time['Start'][index],
      time['End']/eval(unit),time['End'],time['Output'],time['OutputElem'],time['Datadumps']))
     ofile.close()
