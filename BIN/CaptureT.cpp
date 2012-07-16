@@ -112,6 +112,7 @@ int main(int argc,char *argv[])
   string Dir,Desc;
   int nl;
   
+  system("rm Capture.dat") // Deleting file
   for(i=1;i<=Ndir;i++){
 
     //Path of folder output in each run directories
@@ -130,7 +131,7 @@ int main(int argc,char *argv[])
     system(cmd.c_str());
 
     // Get the initial time of the run
-    cmd="grep -v \"#\" " + Desc + " | grep \"Tini\" | gawk -F\"=\" '{print $2}' ";
+    cmd="grep -v \"#\" " + Desc + " | grep \"Start\" | gawk -F\"=\" '{print $2}' ";
     r=exec(cmd);
     Tini=atof(r.c_str());
     //printf("cmd: %s\n",cmd.c_str());
