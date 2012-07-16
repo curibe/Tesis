@@ -4,7 +4,7 @@
 #
 ####################################################
 
-This code using Mercupy, a wrapper of Mercury package design by Jorge Zuluaga. 
+This code uses Mercupy, a wrapper of Mercury package design by Jorge Zuluaga. 
 The Mercury package was developed by John Chambers.
 This programs has been designed to solve the impact event on Jupiter in July 2009
 The code have the follow structure:
