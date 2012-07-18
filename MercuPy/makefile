@@ -11,7 +11,7 @@ PROGRAMS=mercury6_2.exe element6.exe close6.exe
 all:$(PROGRAMS)
 
 %.exe:%.for
-	$(FC) $^ -o $@ &>> errors.log
+	$(FC) $^ -o $@ & >> errors.log
 
 utilbuild:
 	echo "Compiling util programs..."
@@ -34,8 +34,8 @@ prepare:
 	bin/mercupy-prepare
 
 build:
-	#make all
-	./compileMercury.sh
+	make all 2> out.log
+	#./compileMercury.sh
 
 run:$(PROGRAMS)
 	time ./mercury6_2.exe
