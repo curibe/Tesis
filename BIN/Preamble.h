@@ -2,12 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <iostream>
 #include <cstring>
 #include <sstream>
 #include <cstdlib>
 #include <fstream>
 #include <typeinfo>
 #include <unistd.h>
+#include <vector>
 
 //#####################
 // PRECOMPILATED
@@ -58,4 +60,32 @@ std::string exec(string cmd) {
   pclose(pipe);
   result=result.substr(0,result.length()-1);
   return result;
+}
+
+double* splitof(char* Str){
+
+
+  char *token;
+  
+  printf("String: %s \n",Str);
+  
+  //vector <double> VecStr;
+  double VecStr[9];
+  token = strtok(Str," \t\n");
+  //Str=chain.c_str();
+  int i=0;
+  while(token !=NULL){
+    //VecStr.push_back(atof(token));
+    VecStr[i]=atof(token);
+    token=strtok(NULL," \t\n");
+    i++;
+  }
+  
+  /*
+  for(int i=0;i<VecStr.size();++i){
+    // cout<<"Show vector:\n";
+    printf("%E\n",VecStr[i]);
+    } */
+  return (double *) VecStr;
+       
 }
