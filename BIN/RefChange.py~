@@ -1,0 +1,44 @@
+import numpy as np
+import os
+import commands as cm
+from Jupiter import *
+from Config import *
+
+#==============
+# SHORCUTS
+#==============
+system=os.system
+get=cm.getoutput
+getdir=os.getcwd
+chdir=os.chdir
+
+#==============
+# PATHS
+#==============
+#HOME=get("echo $HOME")
+Principal=getdir()
+InitDir=Principal+"/Cond_Iniciales/"
+BinDir=Principal+"/BIN/"
+RunDir=Principal+"/RUNDIR/"
+
+cmd="ls -d "+RunDir+"* | wc -l"
+Ndir=int(get(cmd))
+
+
+BODIES=loadDesc("Ref2Ref.conf")
+
+FileB=[b+".pos" for b in BODIES["BChange"]]
+
+FileC=BODIES["Central"][0]+".pos"
+
+path=RunDir+"run1/output/"
+chdir(path)
+Ndump="salida.txt"
+
+for name in FileB:
+    Nl=int(get("wc -l %s | gawk '{print $1}'"%name))
+    system("tail -n %d %s > %s"%(Nl-4,name,Ndump))
+    cmd="%s=np.loadtxt('%s')"%(name[:-4],Ndump)
+    #exec("%s=np.loadtxt(name)"%varname)
+    
+    

@@ -14,7 +14,12 @@
 //#####################
 // PRECOMPILATED
 //#####################
-#define RSOI 1e8
+#define HOURS 3600.0
+#define DAYS 24*HOURS
+#define YEARS=365.25*DAYS
+#define AU 1.49597870700e8 
+#define RSOI 4.8305783e7
+#define RJUP 71492.0
 
 
 using namespace std;
@@ -62,7 +67,9 @@ std::string exec(string cmd) {
   return result;
 }
 
-double* splitof(char* Str){
+
+
+double* SplitToF(char* Str){
 
 
   char *token;
