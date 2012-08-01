@@ -12,10 +12,10 @@ int main(int argc,char *argv[])
   double Elms[8];
   double et,Mu;
 
-  // IF NUMBER OF PARAMETERS IS LESS 10
-  if(argc<9){
+  // IF NUMBER OF PARAMETERS IS LESS 8
+  if(argc<8){
     printf("***********ERROR**********\n");
-    printf("You must provide 10 values\n");
+    printf("You must provide 8 values\n");
     printf("**************************\n");
     exit(0);
   }
