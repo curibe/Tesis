@@ -2,8 +2,7 @@ import numpy as np
 import os
 import commands as cm
 from Jupiter import *
-from Config import *
-from ICond import *
+from ParamConf import *
 
 
 #==============
@@ -26,15 +25,11 @@ RunDir=Principal+"/RUNDIR"
 #===========================
 # CREATING RUNS DIRECTORIES
 #===========================
-com='wc '+InitDir+'/Io.pos | cut -f 4 -d \" \"' 
-cmd='wc '+InitDir+'/StateInit.state | cut -f 4 -d \" \"'
+cmd='wc '+InitDir+'/Io.pos | cut -f 4 -d \" \"' 
 NDIR=int(get(cmd))
-ND=int(get(com))
 chdir(Principal)
 system("bash DirBuild.sh %d"%NDIR)
 chdir(Actual)
-
-
 
 
 #================================
@@ -50,8 +45,8 @@ chdir(Actual)
 # OPEN STATE FILES FOR EACH BODY
 #--------------------------------------
 nbod=len(Bodyin)
-States=np.zeros([nbod+1,ND,6])  
-
+States=np.zeros([nbod+1,NDIR,6])
+Xio=np.loadtxt(InitDir+"/Io.pos",usecols=(i for i in range(1,7)))
 for k in range(nbod):
     path=InitDir+"/"+Bodyin[k]
     X=np.loadtxt(path,usecols=(i for i in range(1,7)))
@@ -62,54 +57,26 @@ for k in range(nbod):
 #Xganymede=np.loadtxt(InitDir+"/Ganymede.pos",usecols=(i for i in range(1,7)))
 #Xcalixto=np.loadtxt(InitDir+"/Calixto.pos",usecols=(i for i in range(1,7)))
 #Xsun=np.loadtxt(InitDir+"/Sun.pos",usecols=(i for i in range(1,7)))
+et=np.loadtxt(InitDir+"/JupiterPos.dat",usecols=[1])
 
-#%%%%%%%%%%%%%%%%%%%%%%%
-# Loading times
-#%%%%%%%%%%%%%%%%%%%%%%%
-et=np.loadtxt(InitDir+"/JupiterPos.dat",usecols=[0])
-Time['Start']=np.loadtxt(InitDir+"/StateInit.state",usecols=[0])
-#Time['Start']=np.loadtxt(InitDir+"/JupiterPos.dat",usecols=[0])
-Time['End']=ETF
 
-#%%%%%%%%%%%%%%%%%%%%%%%%
-# Loading Comet's States
-#%%%%%%%%%%%%%%%%%%%%%%%%
-CometState=np.loadtxt(InitDir+"/StateInit.state",usecols=(i for i in range(1,7)))
-
-N=len(et)
-Bodies=list()
-for body in Bodyin:
-    obj=body[:-4].upper()
-    obj=eval(obj)
-    Bodies.append(obj)
-
-#Bodies=[IO,EUROPA,GANYMEDE,CALIXTO,SATURN,SUN]
+Bodies=[IO,EUROPA,GANYMEDE,CALIXTO,SUN]
 #States=[Xio,Xeuropa,Xganymede,Xcalixto,Xsun]
 
-
-
-
-
 for i in range(NDIR):
-    
-    j=i%N
-    Id=0
-    #print "i: ",i
-    ofile=open("system.config","a")
-    HeadConfig(Time,i+1,ofile,i)
-    CentralBody(JUPITER,ofile)
-    MinorBody(Id+1,CometState[i],ofile)
-    for cuerpo in range(len(Bodies)):
-        Id=cuerpo+2
-        BodyConfig(Bodies[cuerpo],States[cuerpo][j],Id,ofile)
+    #system("echo Cleaning system.config file:; rm system.config")
+    ofile=open("system.config","a")    
 
+    HeadConfig(Time,i+1,ofile)
+    CentralBody(JUPITER,ofile)
+    
+    for cuerpo in range(len(Bodies)):
+        BodyConfig(Bodies[cuerpo],States[cuerpo][i],cuerpo+1,ofile)
 
     TailConfig(ofile)
     ofile.close()
-    Description(Time,i)
+
     # MOVING THE CONFIGURATION FILE TO THE CORRESPONDING RUN DIR
     cmd="mv system.config " + RunDir + "/run%d/"%(i+1)
-    cmd2="mv Description.txt "+ RunDir + "/run%d/"%(i+1)
     #print cmd
     system(cmd)
-    system(cmd2)

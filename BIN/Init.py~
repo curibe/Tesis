@@ -18,8 +18,10 @@ chdir=os.chdir
 # PATHS
 #==============
 HOME=get("echo $HOME")
-InitDir=HOME+"/Projects/Tesis/Cond_Iniciales"
-Principal=HOME+'/Projects/Tesis'
+#InitDir=HOME+"/Projects/Tesis/Cond_Iniciales"
+InitDir=HOME+"/Tesis/Cond_Iniciales"
+#Principal=HOME+'/Projects/Tesis'
+Principal=HOME+'/Tesis'
 Actual=Principal+"/BIN"
 RunDir=Principal+"/RUNDIR"
 
@@ -27,7 +29,8 @@ RunDir=Principal+"/RUNDIR"
 # CREATING RUNS DIRECTORIES
 #===========================
 com='wc '+InitDir+'/Io.pos | cut -f 4 -d \" \"' 
-cmd='wc '+InitDir+'/StateInit.state | cut -f 4 -d \" \"'
+cmd='wc '+InitDir+'/StateInit.probe | cut -f 4 -d \" \"'
+#cmd='wc '+InitDir+'/StateInit.state | cut -f 4 -d \" \"'
 NDIR=int(get(cmd))
 ND=int(get(com))
 chdir(Principal)
@@ -57,25 +60,21 @@ for k in range(nbod):
     X=np.loadtxt(path,usecols=(i for i in range(1,7)))
     States[k]=X
     
-#Xio=np.loadtxt(InitDir+"/Io.pos",usecols=(i for i in range(1,7)))
-#Xeuropa=np.loadtxt(InitDir+"/Europa.pos",usecols=(i for i in range(1,7)))
-#Xganymede=np.loadtxt(InitDir+"/Ganymede.pos",usecols=(i for i in range(1,7)))
-#Xcalixto=np.loadtxt(InitDir+"/Calixto.pos",usecols=(i for i in range(1,7)))
-#Xsun=np.loadtxt(InitDir+"/Sun.pos",usecols=(i for i in range(1,7)))
 
 #%%%%%%%%%%%%%%%%%%%%%%%
 # Loading times
 #%%%%%%%%%%%%%%%%%%%%%%%
 et=np.loadtxt(InitDir+"/JupiterPos.dat",usecols=[0])
-Time['Start']=np.loadtxt(InitDir+"/StateInit.state",usecols=[0])
+#Time['Start']=np.loadtxt(InitDir+"/StateInit.state",usecols=[0])
+Time['Start']=np.loadtxt(InitDir+"/StateInit.probe",usecols=[0])
 #Time['Start']=np.loadtxt(InitDir+"/JupiterPos.dat",usecols=[0])
 Time['End']=ETF
 
 #%%%%%%%%%%%%%%%%%%%%%%%%
 # Loading Comet's States
 #%%%%%%%%%%%%%%%%%%%%%%%%
-CometState=np.loadtxt(InitDir+"/StateInit.state",usecols=(i for i in range(1,7)))
-
+#CometState=np.loadtxt(InitDir+"/StateInit.state",usecols=(i for i in range(1,7)))
+CometState=np.loadtxt(InitDir+"/StateInit.probe",usecols=(i for i in range(1,7)))
 N=len(et)
 Bodies=list()
 for body in Bodyin:
@@ -93,17 +92,17 @@ for body in Bodyin:
 for i in range(NDIR):
     
     j=i%N
-    Id=0
+    Id=1
     #print "i: ",i
     ofile=open("system.config","a")
     HeadConfig(Time,i+1,ofile,i)
     CentralBody(JUPITER,ofile)
-    MinorBody(Id+1,CometState[i],ofile)
+    
     for cuerpo in range(len(Bodies)):
-        Id=cuerpo+2
-        BodyConfig(Bodies[cuerpo],States[cuerpo][j],Id,ofile)
+        Id=cuerpo+1
+        BigBody(Bodies[cuerpo],States[cuerpo][j],Id,ofile)
 
-
+    MinorBody(Id+1,CometState[i],ofile)
     TailConfig(ofile)
     ofile.close()
     Description(Time,i)

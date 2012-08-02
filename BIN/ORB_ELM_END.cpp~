@@ -108,7 +108,7 @@ int main(int argc,char *argv[])
     SunS[1]*=AU; SunS[2]*=AU; SunS[3]*=AU;
     SunS[4]*=AU/DAYS; SunS[5]*=AU/DAYS; SunS[6]*=AU/DAYS;
     
- 
+
     //printf("COMET STATE:  %E %e %e %e %e %e %e %e\n",State[0],State[1],State[2],State[3],State[4],State[5],State[6],State[7]);
 
     // Converting the time from days to JD
@@ -122,7 +122,7 @@ int main(int argc,char *argv[])
     
 
     //%%%%%%%%%%%%%%%%%%%%%% SECTION III %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    ///*
+    /*
     sprintf(strn,"%e %e %e %e %e %e %e %e",X[0],X[1],X[2],X[3],X[4],X[5],Time,MUSUN);
     printf("strn: %s\n",&strn[0]);
     XYZ2AEI = Bindir + "/./xyz2aei.out " +strn;
@@ -146,6 +146,31 @@ int main(int argc,char *argv[])
     for(int j=0;j<N;j++)
     printf("%E\n",State[j]);*/
   }
+
+    printf("SALI DEL FOR\n");
+  int a=1;
+  float b=2.0;
+  double c=3.0;
+  char *d="Hola";
+  string e="STRING";
+  string f;
+  char g;
+  char *h;
+  char *pr;
+  double z=1.2345;
+
+  printf("Types of variable:\n");
+  printf("a: %s\n",typeid(a).name());
+  printf("b: %s\n",typeid(b).name());
+  printf("c: %s\n",typeid(c).name());
+  printf("d: %s\n",typeid(d).name());
+  printf("e: %s\n",typeid(e).name());
+  printf("f: %s\n",typeid(f).name());
+  printf("g: %s\n",typeid(g).name());
+  printf("h: %s\n",typeid(h).name());
   
+
+
+ 
   return 0;
 }

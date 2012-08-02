@@ -63,20 +63,10 @@ SUN={'Name':'SUN',
 # OBJECTS INCLUDED IN THE SIMULATION
 #=====================================
 Bodyin=[
-    'Io.pos',
-    'Europa.pos',
-    'Ganymede.pos',
-    'Calixto.pos',
-    'Saturn.pos',
-    'Sun.pos'
-    ]
-
-
-##############################
-# FILE NAME
-##############################
-'''
-  Default: JupiterPos.dat
-  location: Tesis/Cond_Iniciales
-'''
-File="StateInit.probe"
+    'Io.pos']
+    # 'Europa.pos',
+    # 'Ganymede.pos',
+    # 'Calixto.pos',
+    # 'Saturn.pos',
+    # 'Sun.pos'
+    # ]

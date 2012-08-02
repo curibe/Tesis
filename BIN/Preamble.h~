@@ -41,15 +41,22 @@ string toString( T argument)
        string r;
        stringstream s;
        char str[30];
-       
-       if(!strcmp(typeid(argument).name(),"d")){
-	 sprintf(str,"%.5lf",argument);
-	 r=string(str); 
+
+              
+       printf("Type argument: %s\n",typeid(argument).name());
+       if(typeid(argument).name()=="d"){
+	 printf("Dentro del if del double\n");
+	 sprintf(str,"%lf",argument);
+	 r=""+str;  // this in uncorrect.. Check it
        }//*/
-       if(!strcmp(typeid(argument).name(),"i")){
+       if(typeid(argument).name()=="i"){
+	 printf("Dentro del if del double\n");
 	 s << argument;
 	 r = s.str();}
-       
+       //printf("In toString: %s\n",r.c_str());
+       //cout<<"In toString:\ns:"<<s<<"\nr:"<<r<<"\nargument:"<<argument<<endl;
+
+       // return r; 
        return r;
 
 }

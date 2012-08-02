@@ -3,7 +3,6 @@ import os
 import commands as cm
 from Jupiter import *
 from Config import *
-from ICond import *
 
 #==============
 # SHORCUTS
@@ -25,10 +24,21 @@ RunDir=Principal+"/RUNDIR/"
 cmd="ls -d "+RunDir+"* | wc -l"
 Ndir=int(get(cmd))
 
-print "*"*50
-print "*  Preparing Simulation in each Directory....."
-print "*"*50
-for i in range(1,Ndir+1):
-    dir= RunDir + "run%d/"%i
-    chdir(dir)
-    system("make clean prepare build > OutRun.dump")
+
+BODIES=loadDesc("Ref2Ref.conf")
+
+FileB=[b+".pos" for b in BODIES["BChange"]]
+
+FileC=BODIES["Central"][0]+".pos"
+
+path=RunDir+"run1/output/"
+chdir(path)
+Ndump="salida.txt"
+
+for name in FileB:
+    Nl=int(get("wc -l %s | gawk '{print $1}'"%name))
+    system("tail -n %d %s > %s"%(Nl-4,name,Ndump))
+    cmd="%s=np.loadtxt('%s')"%(name[:-4],Ndump)
+    #exec("%s=np.loadtxt(name)"%varname)
+    
+    
