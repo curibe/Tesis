@@ -36,4 +36,7 @@ else:
     for i in range(1,Ndir+1):
         dir= RunDir + "run%d/"%i
         chdir(dir)
-        system("make run")
+        system("make run >> RunOut.txt")# >> RunOut.txt
+        system("rm RunOut.txt")
+        percent=i/float(Ndir)*100.0
+        progress(30,percent,'Running   ')

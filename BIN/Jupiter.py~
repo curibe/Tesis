@@ -1,7 +1,4 @@
 import numpy as np
-import sys
-import time
-import math
 import os
 import commands as cm
 
@@ -263,15 +260,4 @@ DataDumps = %.2f
     ofile.close()
 
 
-#*********************
-# PROGRESS BAR
-#*********************
-def progress(width,percent,msg):
-    marks = math.floor(width * (percent /100.0))
-    spaces = math.floor(width - marks)
-    loader = msg + '[' + ('=' * int(marks)) + (' ' * int(spaces)) + ']'
-    sys.stdout.write("%s %d%%\r" % (loader, percent))
-    if percent >= 100:
-        sys.stdout.write("\n")
-    sys.stdout.flush()
 

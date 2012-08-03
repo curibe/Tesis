@@ -22,9 +22,6 @@
 #define RJUP 71492.0
 #define MUSUN 1.328182e+11
 #define MUJUP 1.268113e+08
-#define IncJ 0.02276  /*In radians.  Inclination of jupiter respect to ecliptic. (1.304 deg)*/
-#define aJ 5.2028*AU
-
 
 
 using namespace std;
@@ -126,47 +123,5 @@ double getSMAxis(double rp, double e){
   if(fabs(e-1)<=1e-3){ a = rp;}
 
   return a;
-
-}
-
-
-double Tisserand(double rp, double e, double I)
-{
-  double a,p,T;
-
-  //For Ecliptic and Hyperbolic Orbit
-  if(e<1.0 || e>1.0)
-    {
-      a=fabs(rp/(1-e));
-      p=rp*(1+e);
-      T= aJ/a + 2*sqrt(p/aJ)*cos(IncJ-I);
-      return T;
-    }
-  // For parabolic Orbit
-  if(fabs(e-1)<=1e-3)
-    {
-      a=rp;
-      p=2*rp;
-      T= aJ/a + 2*sqrt(p/aJ)*cos(IncJ-I);
-      return T;
-    }
-}
-
-double* ChangeSR(double St1[7], double St2[7]){
-
-  double x[6];
-  
-  x[0]=St1[1]-St2[1]; x[1]=St1[2]-St2[2]; x[2]=St1[3]-St2[3];
-  x[3]=St1[4]-St2[4]; x[4]=St1[5]-St2[5]; x[5]=St1[6]-St2[6];
-  return (double *)x;
-}
-
-double* ChangeUnit(double St[7]){
-
-  St[0]*=DAYS;
-  St[1]*=AU; St[2]*=AU; St[3]*=AU;
-  St[4]*=AU/DAYS; St[5]*=AU/DAYS; St[6]*=AU/DAYS;
-  
-  return (double *)St
 
 }

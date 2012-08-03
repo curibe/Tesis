@@ -19,7 +19,8 @@ Building:
 
 Run:
 	@echo "Running Simulation....."
-	python BIN/Running.py &>/dev/null
+	#python BIN/Running.py &>/dev/null
+	python BIN/Running.py  
 Ref:
 	python BIN/RefChange.py
 
@@ -31,6 +32,9 @@ Capture:
 
 condini:
 	python Cond_Iniciales/InitialCond.py
+
+utilprog:
+	make -s -C UTILPROG all install
 
 
 ####################################

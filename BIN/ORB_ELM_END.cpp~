@@ -21,11 +21,11 @@ int main(int argc,char *argv[])
     
   char *CMD, *strl, strn[200];
   int Ndir,N;
-  double *State,output,*OrbElm,*SunS, Tiss;
+  double *State,output,*OrbElm,*SunS;
   double ET,X[6],Tini,Xs,Time, distance,SMaxis;
 
   
-  FILE *POS,*ORB,*TISS;
+  FILE *POS,*ORB;
 
 
   //*******************
@@ -35,8 +35,7 @@ int main(int argc,char *argv[])
   Rundir = Principal+"/RUNDIR/";
   Bindir = Principal+"/BIN";
   Analysis = Principal + "/Analysis/";
-  OrbFile = Analysis + fileANAL;
-  TissFile = Analysis + "Tisserand.dat"
+  pathAnal = Analysis + fileANAL;
 
   // Read the total number of runs
   cmd="ls -d "+Rundir+"* | wc -l";
@@ -44,12 +43,10 @@ int main(int argc,char *argv[])
   Ndir=atoi(r.c_str());
 
   // Cleaning file in Analysis folder
-  cmd = "rm " + OrbFile;
+  cmd = "rm " + pathAnal;
   system(cmd.c_str());
-  cmd = "rm " + TissFile;
-  system(cmd.c_str());
-
-    
+ 
+  
   for(int i=1;i<=Ndir;i++){
 
     //%%%%%%%%%%%%%%%%%%%%% SECTION I %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -78,6 +75,7 @@ int main(int argc,char *argv[])
     printf("COMET STATE:  %e %e %e %e %e %e %e %e\n",State[0],State[1],State[2],State[3],State[4],State[5],State[6],State[7]);
 
     // Get the initial time of the run
+    //cout<<"Get the initial time of the run"<<endl;
     cmd="grep -v \"#\" " + Desc + " | grep \"Start\" | gawk -F\"=\" '{print $2}' ";
     r=exec(cmd);
     Tini=atof(r.c_str())*DAYS; // in seconds
@@ -85,7 +83,7 @@ int main(int argc,char *argv[])
 
 
     //Reading the file BODY6.pos : Sun
-    //Finding the line in which the time value equal to State[0] (time).
+    //Finding the line in which the time value equal to State[0].
     cmd = "grep \" " + toString(State[0]) + "\" " + Dir + fileSun;
     cout<<"cmd: "<<cmd<<endl;
     out=exec(cmd.c_str());
@@ -96,7 +94,6 @@ int main(int argc,char *argv[])
     printf("SUN STATE:  %.3lf %e %e %e %e %e %e %e\n",SunS[0],SunS[1],SunS[2],SunS[3],SunS[4],SunS[5],SunS[6],SunS[7]);
 
 
-    
     //%%%%%%%%%%%%%%%%% SECTION II %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     // CONVERTING FROM (AU,DAYS,MJUP) to (km,s,kg) unit system
@@ -114,11 +111,10 @@ int main(int argc,char *argv[])
  
     //printf("COMET STATE:  %E %e %e %e %e %e %e %e\n",State[0],State[1],State[2],State[3],State[4],State[5],State[6],State[7]);
 
-    /*if(distance>RSOI){//*/
-    
     // Converting the time from days to JD
     Time=(Tini + State[0]);
-    
+    //printf("Time: %E\n",Time);
+
     // CHANGING OF REFERENCE FRAME: FROM JUPITER TO SUN
     X[0]=State[1]-SunS[1]; X[1]=State[2]-SunS[2]; X[2]=State[3]-SunS[3];
     X[3]=State[4]-SunS[4]; X[4]=State[5]-SunS[5]; X[5]=State[6]-SunS[6];
@@ -127,19 +123,6 @@ int main(int argc,char *argv[])
 
     //%%%%%%%%%%%%%%%%%%%%%% SECTION III %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     ///*
-    /********************************************
-     Getting the orbital elements and the Tisserand Parameter.
-    The orbital element are stored in the array OrbElm. The entrance are:
-    OrbElm[0]: perifocal distance (rp)
-    OrbElm[1]: eccentricity (ecc)
-    OrbElm[2]: Inclination (inc)
-    OrbElm[3]: Longitude of Ascending Node (lnode)
-    OrbElm[4]: Argument of periapsis (argp)
-    OrbElm[5]: Mean anomaly at epoch (m0)
-    OrbElm[6]: Epoch (t0)
-    OrbElm[7]: Gravitational Parameter (mu) 
-    ***********************************************/
-
     sprintf(strn,"%e %e %e %e %e %e %e %e",X[0],X[1],X[2],X[3],X[4],X[5],Time,MUSUN);
     printf("strn: %s\n",&strn[0]);
     XYZ2AEI = Bindir + "/./xyz2aei.out " +strn;
@@ -147,22 +130,21 @@ int main(int argc,char *argv[])
     out = exec(XYZ2AEI.c_str());
     OrbElm = Split2F((char *)out.c_str());
     SMaxis = getSMAxis(OrbElm[0],OrbElm[1]);
-    Tiss = Tisserand(OrbElm[0],OrbElm[1],OrbElm[2]);
 
     //N=sizeof(State);
     
     // Verifying if the comet has gotten out of the SOI
     if(distance>RSOI){
       printf("Run %d : has gotten out of SOI.\n");
-      ORB=fopen(OrbFile.c_str(),"a");
-      TISS=fopen(TissFile,"a");
+      ORB=fopen(pathAnal.c_str(),"a");
       fprintf(ORB,"%4d   %10lf   %16E   %16E   %16E   %16E   %16E   %16E   %16E   %16E   %16E   %16E\n",
 	      i,SMaxis,OrbElm[1],OrbElm[2],OrbElm[3],OrbElm[4],OrbElm[5],OrbElm[6],OrbElm[7]);
-      fprintf(TISS,"%16E %16E %16E %16E %14lf\n",SMaxis,OrbElm[0],OrbElm[1],OrbElm[2],Tiss);
-      fclose(ORB); 
-      fclose(TISS);
+      fclose(ORB);     
     }
         
+    /*
+    for(int j=0;j<N;j++)
+    printf("%E\n",State[j]);*/
   }
   
   return 0;
