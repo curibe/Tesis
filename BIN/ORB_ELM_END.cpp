@@ -148,6 +148,8 @@ int main(int argc,char *argv[])
     OrbElm = Split2F((char *)out.c_str());
     SMaxis = getSMAxis(OrbElm[0],OrbElm[1]);
     Tiss = Tisserand(OrbElm[0],OrbElm[1],OrbElm[2]);
+    // Determining the Aphelion 
+    if(OrbElm[1]<1.0 && OrbElm[1]>0.0) Aphelion = SMaxis*(1+OrbElm[1]);
 
     //N=sizeof(State);
     
@@ -156,8 +158,8 @@ int main(int argc,char *argv[])
       printf("Run %d : has gotten out of SOI.\n");
       ORB=fopen(OrbFile.c_str(),"a");
       TISS=fopen(TissFile,"a");
-      fprintf(ORB,"%4d   %10lf   %16E   %16E   %16E   %16E   %16E   %16E   %16E   %16E   %16E   %16E\n",
-	      i,SMaxis,OrbElm[1],OrbElm[2],OrbElm[3],OrbElm[4],OrbElm[5],OrbElm[6],OrbElm[7]);
+      fprintf(ORB,"%4d   %16E   %16E   %16E   %16E   %16E   %16E   %16E   %16E   %16E\n",
+	      i,SMaxis,Aphelion,OrbElm[1],OrbElm[2],OrbElm[3],OrbElm[4],OrbElm[5],OrbElm[6],OrbElm[7]);
       fprintf(TISS,"%16E %16E %16E %16E %14lf\n",SMaxis,OrbElm[0],OrbElm[1],OrbElm[2],Tiss);
       fclose(ORB); 
       fclose(TISS);
