@@ -1,0 +1,32 @@
+import numpy as np
+import os
+import commands as cm
+
+
+#==============
+# SHORCUTS
+#==============
+system=os.system
+get=cm.getoutput
+getdir=os.getcwd
+chdir=os.chdir
+
+#==============
+# PATHS
+#==============
+HOME=get("echo $HOME")
+InitDir=HOME+"/Projects/Tesis/Cond_Iniciales"
+Principal=HOME+'/Projects/Tesis'
+
+#===========================
+# CREATING RUNS DIRECTORIES
+#===========================
+cmd='wc '+InitDir+'/StateInit.state | cut -f 4 -d \" \"' 
+NDIR=int(get(cmd))
+chdir(Principal)
+system("bash DirBuild.sh 20")
+
+
+#================================
+# CREATING CONFIGURATION FILES
+#================================

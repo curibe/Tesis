@@ -1,0 +1,56 @@
+#include <Preamble.h>
+
+//###############
+// MAIN
+//###############
+int main(int argc,char *argv[])
+{
+
+  string Principal,r,cmd;
+  string Rundir,Bindir;
+  //string Rundir("/RUNDIR/");
+  //string Bindir("/BIN/");
+  string Rdir;
+  string filePOS="BODY7.pos";
+  string fileORB="BODY7.orb";
+  string Fdump="Comet.pos";
+  string Nl,NameF,pathPOS,pathORB,Dir,out;
+    
+  char *CMD;
+  
+  int Ndir;
+
+  FILE *POS,*ORB;
+
+
+  //*******************
+  // PATHS
+  //*******************
+  Principal=exec("pwd");
+  Rundir=Principal+"/RUNDIR/";
+  Bindir=Principal+"/BIN";
+
+  // Read the total number of runs
+  cmd="ls -d "+Rundir+"* | wc -l";
+  r=exec(cmd);
+  Ndir=atoi(r.c_str());
+  double output;
+  for(int i=1;i<=Ndir;i++){
+
+    //Path of folder output in each run directories
+    // Path of the Description file
+    Dir=Rundir+"run"+toString(i)+"/output/";
+    pathPOS = Dir + filePOS;
+    pathORB = Dir + fileORB;
+    
+    cmd = "tail -n 1 " + pathPOS;
+    out = exec(cmd.c_str());
+    output=atof(out.c_str());
+    printf("i:%d  out: %s\n",i,out.c_str());
+    printf("OUTPUT: %lf ...\n",output);
+
+  }
+
+  
+
+}
