@@ -1,8 +1,0 @@
-#####################################
-# Configuration file by change 
-# of reference system
-####################################
-
-# Bodies to transform
-#----------------------
-Bodies=['BODY7']
