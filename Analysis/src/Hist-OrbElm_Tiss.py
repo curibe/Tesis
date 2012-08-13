@@ -1,37 +1,4 @@
-import numpy as np
-import matplotlib.pyplot as plt
-import os
-import commands as cm
-
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-# UTIL CONSTANT
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-HOURS=3600.0
-DAYS=24*HOURS
-YEARS=365.25*DAYS
-AU=1.49597870700e8 
-RSOI=4.8305783e7
-RJUP=71492.0
-
-
-#==============
-# SHORCUTS
-#==============
-system=os.system
-get=cm.getoutput
-getdir=os.getcwd
-chdir=os.chdir
-
-#==============
-# PATHS
-#==============
-#HOME=get("echo $HOME")
-Principal=getdir()
-InitDir=Principal+"/Cond_Iniciales/"
-BinDir=Principal+"/BIN/"
-RunDir=Principal+"/RUNDIR/"
-AnalDir=Principal+"/Analysis/"
-SrcDir=AnalDir+"src/"
+from Analysis import *
 
 #===========================
 # PARAMETERS
@@ -51,6 +18,7 @@ a,Q,e,inc=np.loadtxt(filenameOE, usecols=[0,1,2,3],unpack=True)
 #***** Tisserand Parameter ******
 filenameT=SrcDir+NameFileT
 Tiss=np.loadtxt(filenameT,usecols=[5])
+
 
 #**************************
 # Converting from km to AU

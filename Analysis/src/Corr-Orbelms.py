@@ -2,38 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 import commands as cm
-
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-# UTIL CONSTANT
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-HOURS=3600.0
-DAYS=24*HOURS
-YEARS=365.25*DAYS
-AU=1.49597870700e8 
-RSOI=4.8305783e7
-RJUP=71492.0
-AJ=778219200.0/AU
-
-
-#==============
-# SHORCUTS
-#==============
-system=os.system
-get=cm.getoutput
-getdir=os.getcwd
-chdir=os.chdir
-
-#==============
-# PATHS
-#==============
-#HOME=get("echo $HOME")
-Principal=getdir()
-InitDir=Principal+"/Cond_Iniciales/"
-BinDir=Principal+"/BIN/"
-RunDir=Principal+"/RUNDIR/"
-AnalDir=Principal+"/Analysis/"
-SrcDir=AnalDir+"src/"
-
+from Analysis import *
 
 #===========================
 # PARAMETERS
@@ -52,10 +21,26 @@ filenameOE=SrcDir+NameFileOE
 a,Q,e,inc=np.loadtxt(filenameOE, usecols=[0,1,2,3],unpack=True)
 #***** Tisserand Parameter ******
 filenameT=SrcDir+NameFileT
-Tiss=np.loadtxt(filenameT,usecols=[5])
+#Tiss=np.loadtxt(filenameT,usecols=[5])
+A,Ex,I,Tiss=np.loadtxt(filenameT,usecols=[0,2,3,5],unpack=True)
+
+
+
+#==============================
+# COUNTING BODIES 
+#==============================
+Vec=np.loadtxt(filenameT,usecols=[0,5])
+Vec[:,0]=Vec[:,0]/AU  # Vec[fila,columna]
+A=A/AU
+I=I*180.0/np.pi
+Nbodies=Count_TvsA(Vec)
+percent=Nbodies*100.0/Nbodies.sum()
+Text1="%.2f "%(percent[1]) + "%"
+
 
 #**************************
 # Converting from km to AU
+# and radians to degree
 #**************************
 a=a/AU
 Q=Q/AU
@@ -63,10 +48,10 @@ Q=Q/AU
 #=================================
 # Tisserand curve for Jupiter
 #=================================
-X=np.arange(1.7,20,0.1)
+X=np.arange(1.734,20,0.1)
 EX=np.sqrt(1-(3-AJ/X)**2*(AJ/(4*X)))
 
-
+"""
 #============================================================
 #                        PLOTS
 #============================================================
@@ -111,4 +96,67 @@ IvsE.set_xticks(np.arange(0,1,0.1))
 IvsE.grid(True)
 
 
+#*****************************************************
+#           INCLINATION VS SEMIMAJOR AXIS  
+#*****************************************************
+fig4=plt.figure()
+IvsA=fig4.add_subplot(111)
+IvsA.plot(a,inc,'bo')
+IvsA.set_xlabel('Semimajor axis (AU)')
+IvsA.set_ylabel('Inclination (Deg)')
+IvsA.set_xlim(0,30)
+IvsA.grid(True)
+"""
+
+#*****************************************************
+#        TISSERAND PARAMETER VS SEMIMAJOR AXIS  
+#*****************************************************
+x=np.arange(AJ,30,0.1)
+y=np.ones_like(x)*3
+fig5=plt.figure()
+TvsA=fig5.add_subplot(111)
+TvsA.plot(A,Tiss,'bo')
+#TvsA.fill_between(x,y,0,color='green')
+TvsA.set_xlabel('Semimajor axis (AU)')
+TvsA.set_ylabel('Tisserand Parameter')
+TvsA.set_xlim(0,30)
+TvsA.set_ylim(0,10.0)
+TvsA.axhline(y=3,color='k',ls='--',lw=1.8)
+TvsA.axvline(x=AJ,color='k',ls='--',lw=1.8)
+TvsA.text(25.0,1.0,Text1, size=20,ha="center",va="center", 
+          bbox=dict(boxstyle="round",
+                    ec=(1., 0.0, 0.2),
+                    fc=(1., 0.8, 1.0)))
+
+TvsA.grid(True)
+
+"""
+#*****************************************************
+#        TISSERAND PARAMETER VS ECCENTRICITY
+#*****************************************************
+fig6=plt.figure()
+TvsE=fig6.add_subplot(111)
+TvsE.plot(Ex,Tiss,'bo')
+TvsE.set_xlabel('Eccentricity')
+TvsE.set_ylabel('Tisserand Parameter')
+TvsE.set_ylim(0,10.0)
+TvsE.axhline(y=3,color='k',ls='--',lw=1.8)
+TvsE.grid(True)
+
+
+#*****************************************************
+#        TISSERAND PARAMETER VS ECCENTRICITY
+#*****************************************************
+fig7=plt.figure()
+TvsI=fig7.add_subplot(111)
+TvsI.plot(I,Tiss,'bo')
+TvsI.set_xlabel('Inclination (deg)')
+TvsI.set_ylabel('Tisserand Parameter')
+TvsI.set_ylim(0,10.0)
+TvsI.axhline(y=3,color='k',ls='--',lw=1.8)
+TvsI.grid(True)
+"""
+
+
 plt.show()
+
