@@ -1,28 +1,55 @@
-from Analysis import *
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+import commands as cm
+
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# UTIL CONSTANT
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+HOURS=3600.0
+DAYS=24*HOURS
+YEARS=365.25*DAYS
+AU=1.49597870700e8 
+RSOI=4.8305783e7
+RJUP=71492.0
+
+
+#==============
+# SHORCUTS
+#==============
+system=os.system
+get=cm.getoutput
+getdir=os.getcwd
+chdir=os.chdir
+
+#==============
+# PATHS
+#==============
+#HOME=get("echo $HOME")
+Principal=getdir()
+InitDir=Principal+"/Cond_Iniciales/"
+BinDir=Principal+"/BIN/"
+RunDir=Principal+"/RUNDIR/"
+AnalDir=Principal+"/Analysis/"
+SrcDir=AnalDir+"src/"
 
 #===========================
 # PARAMETERS
 #===========================
 Nbins=100.0
-rangeA={'Min':0,'Max':30}
-NameFileOE="OrbElms_SUN.orb"
-NameFileT="Tisserand.dat"
-
+NameFile="OrbElms_SUN.orb"
+#NameFile=Capture.dat
 
 #===========================
 # LOADING FILES
 #===========================
-#***** Orbital Elements *******
-filenameOE=SrcDir+NameFileOE
-a,Q,e,inc=np.loadtxt(filenameOE, usecols=[0,1,2,3],unpack=True)
-#***** Tisserand Parameter ******
-filenameT=SrcDir+NameFileT
-Tiss=np.loadtxt(filenameT,usecols=[5])
+filename=SrcDir+NameFile
+#a,Q,e,inc=np.loadtxt(filename, usecols=[0,1,2,3])
+a,Q,e,inc=np.loadtxt(filename, usecols=[0,1,2,3],unpack=True)
 
-
-#**************************
-# Converting from km to AU
-#**************************
+#*************************
+# Converting SMAxis to AU
+#*************************
 a=a/AU
 Q=Q/AU
 
@@ -32,13 +59,9 @@ Q=Q/AU
 # DEFINING MAXIMUM AND MINIMUM
 #=========================================
 #************ Semimajor Axis************
-if a.max()>rangeA['Max']:
-    MaxA=rangeA['Max']
-else:
-    MaxA=np.ceil(a.max())
+MaxA=np.ceil(a.max())
 MinA=np.floor(a.min())
-#dxA=(MaxA-MinA)/Nbins
-dxA=1.0
+dxA=(MaxA-MinA)/Nbins
 #************ Aphelion******************
 MaxQ=np.ceil(Q.max())
 MinQ=np.floor(Q.min())
@@ -51,10 +74,6 @@ dxE=(MaxE-MinE)/Nbins
 MaxI=np.ceil(inc.max())
 MinI=np.floor(inc.min())
 dxI=(MaxI-MinI)/Nbins
-#************ Tisserand ***************
-MaxT=np.ceil(Tiss.max())
-MinT=np.floor(Tiss.min())
-dxT=(MaxT-MinT)/Nbins
 
 
 
@@ -65,10 +84,7 @@ dxT=(MaxT-MinT)/Nbins
 BinA=np.arange(MinA,MaxA+dxA/2.0,dxA)
 dimA=len(BinA-1)
 inA=BinA.searchsorted(a.max())
-if a.max()>rangeA['Max']:
-    Alim=rangeA['Max']
-else:
-    Alim=BinA[inA]
+Alim=BinA[inA]
 #************ Aphelion******************
 BinQ=np.arange(MinQ,MaxQ+dxQ/2.0,dxQ)
 dimQ=len(BinQ-1)
@@ -84,11 +100,7 @@ BinI=np.arange(MinI,MaxI+dxI/2.0,dxI)
 dimI=len(BinI-1)
 inI=BinI.searchsorted(inc.max())
 Ilim=BinI[inI]
-#************ Tisserand ***************
-BinT=np.arange(MinT,MaxT+dxT/2.0,dxT)
-dimT=len(BinT-1)
-inT=BinT.searchsorted(Tiss.max())
-Tlim=BinI[inT]
+
 
 
 #=====================================================================
@@ -100,8 +112,8 @@ Tlim=BinI[inT]
 #****************************************************
 fig1=plt.figure()
 Adist=fig1.add_subplot(111)
-NA=Adist.hist(a,BinA,color='blue',alpha=0.75,histtype='stepfilled')[0]
-Adist.set_xlim([MinA,MaxA])
+NA=Adist.hist(a,BinA,color='blue',alpha=0.75,histtype='step')[0]
+Adist.set_xlim([MinA,70])
 Adist.set_xlabel('Semimajor Axis (AU)')
 Adist.set_ylabel('Number of Objects')
 
@@ -111,7 +123,7 @@ Adist.set_ylabel('Number of Objects')
 #****************************************************
 fig2=plt.figure()
 Qdist=fig2.add_subplot(111)
-NQ=Qdist.hist(Q,BinQ,facecolor='green',alpha=0.75,histtype='stepfilled')[0]
+NQ=Qdist.hist(Q,BinQ,facecolor='green',alpha=0.75,histtype='step')[0]
 Qdist.set_xlim([MinQ,MaxQ])
 Qdist.set_xlabel('Aphelion (AU)')
 Qdist.set_ylabel('Number of Objects')
@@ -122,32 +134,21 @@ Qdist.set_ylabel('Number of Objects')
 #****************************************************
 fig3=plt.figure()
 Edist=fig3.add_subplot(111)
-NE=Edist.hist(e,BinE,color='red',alpha=0.75,histtype='stepfilled')[0]
+NE=Edist.hist(e,BinE,color='red',alpha=0.75,histtype='step')[0]
 Edist.set_xlim([MinE,MaxE])
 Edist.set_xlabel('Eccentricity')
 Edist.set_ylabel('Number of Objects')
 
 
 #****************************************************
-#                    INCLINATION
+#                    ECCENTRICITY
 #****************************************************
 fig4=plt.figure()
 Idist=fig4.add_subplot(111)
-NI=Idist.hist(inc,BinI,color='magenta',alpha=0.75,histtype='stepfilled')[0]
+NI=Idist.hist(inc,BinI,color='magenta',alpha=0.75,histtype='step')[0]
 Idist.set_xlim([MinI,MaxI])
 Idist.set_xlabel('Inclination (rad or deg)')
 Idist.set_ylabel('Number of Objects')
-
-
-#****************************************************
-#                TISSERAND PARAMETER
-#****************************************************
-fig5=plt.figure()
-Tdist=fig5.add_subplot(111)
-NT=Tdist.hist(Tiss,BinT,color='cyan',alpha=0.75,histtype='stepfilled')[0]
-Tdist.set_xlim([MinT,MaxT])
-Tdist.set_xlabel('Tisserand Parameter')
-Tdist.set_ylabel('Number of Objects')
 
 
 plt.show()

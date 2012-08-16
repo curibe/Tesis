@@ -54,10 +54,3 @@ def Count_TvsA(vec):
         
     result=np.array([TmAm,TmAM,TMAm,TMAM])
     return result
-
-def TisserandC(x,T,Type):
-    
-    if Type=="Elliptical":
-        return np.sqrt(1-(AJ/(4*x))*(T-AJ/x)**2)
-    if Type=="Hyperbolic":
-        return np.sqrt(1+(AJ/(4*x))*(T-AJ/x)**2)
