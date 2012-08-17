@@ -8,10 +8,10 @@ from Analysis import *
 #          PARAMETERS
 #==============================
 dT=0.1
-dx=0.1
+dx=0.01
 AMin=1.734
 AMax=20.0
-AMin3=2.0833
+AMin3=2.604
 T=3.0
 T1=3.0+dT
 T2=3.0-dT
@@ -57,7 +57,7 @@ TEXTH=r'$E=\sqrt{1+a_J\left(T-a_J/x\right)^2/4x}$'
 #                PLOTS
 #=======================================
 
-"""
+
 # ******* Elliptical ***********
 fig1=plt.figure()
 tissE=fig1.add_subplot(111)
@@ -87,7 +87,6 @@ tissH.plot(XH,ex4H,'y--',label=LabelH[4])
 tissH.plot(XH,ex5H,'c--',label=LabelH[5])
 tissH.plot(XH,ex6H,'k--',label=LabelH[6])
 tissH.plot(XH,ex7H,'r-.',label=LabelH[7])
-#tissH.fill_between(XH,TissH,ex3H,where=ex3H>=TissH,color='blue',alpha=0.1)
 tissH.set_xlim(0,10.0)
 tissH.set_ylim(0,8.0)
 tissH.set_xlabel("Semimajor Axis (AU)")
@@ -95,7 +94,6 @@ tissH.set_ylabel("Eccentricity")
 tissH.grid(True)
 tissH.text(5.0,4.0,TEXTH,size=15,ha="center")
 tissH.legend(loc='upper right')
-"""
 
 
 #******************************
@@ -103,19 +101,44 @@ tissH.legend(loc='upper right')
 #******************************
 
 # ***** subregion ******
+Ex3E=TisserandC(X3E,T3,"Elliptical")
 xs=np.arange(0,AMin,AMin/20.0)
 ys=1.0*np.ones_like(xs)
+#*********************
+tmp=np.ones_like(XE)*AMin3
+idx=float(np.where(np.fabs(XE-tmp)<=1.0e-05)[0])
+xs2=XE[:idx]
+ys2=np.ones_like(xs2)
+#**********************
 x=np.r_[xs,XE]     # concatenate arrays
 tiss=np.r_[ys,TissE]
+x2=np.r_[xs2,X3E]
+EX3E=np.r_[ys2,Ex3E]
 #********* PLOT *********
 fig3=plt.figure()
 TissS=fig3.add_subplot(111)
 TissS.plot(XE,TissE,'k-')
-TissS.plot(XE,ex3E,'k-')
-TissS.fill_between(XE,TissE,1.0, color = 'red', alpha=0.3)
-#TissS.fill_between(XE,TissE,0.0,color = 'green', alpha=0.3)
-TissS.fill_between(x,tiss,0.0,color = 'green', alpha=0.3)
+TissS.plot(X3E,Ex3E,'k-')
+TissS.fill_between(X3E,Ex3E,1.0, color = 'blue', alpha=0.2)
+TissS.fill_between(x2,TissE,EX3E,where=TissE<EX3E, color = 'red', alpha=0.2)
+TissS.fill_between(x,tiss,0.0,color = 'green', alpha=0.2)
 TissS.set_ylim(0,1.0)
 TissS.set_xlim(0,AMax)
+TissS.set_xlabel("Semimajor Axis (AU)")
+TissS.set_ylabel("Eccentricity")
+#******* Text JFC **********
+TissS.text(8.0,0.7,"Jupiter Family Comets",size=14,ha="center",fontweight='bold')
+TissS.text(8.0,0.65,"Short Period Comets",size=14,ha="center",fontweight='bold')
+TissS.text(8.0,0.6,"2.0<T<3.0",size=14,ha="center",fontweight='bold')
+#******* Long Period Comets ********
+TissS.text(10.0,0.93,"Oort Cloud's objects (LPC)",size=14,ha="center",fontweight='bold')
+TissS.text(10.0,0.88,"T<2.0",size=14,ha="center",fontweight='bold')
+#********** Ateroids *************
+TissS.text(14.0,0.3,"Asteroids",size=14,ha="center",fontweight='bold')
+TissS.text(14.0,0.23,"T>3.0",size=14,ha="center",fontweight='bold')
+TissS.text(1.8,0.3,"Asteroids",size=14,ha="center",fontweight='bold')
+TissS.text(1.8,0.23,"T>3.0",size=14,ha="center",fontweight='bold')
+TissS.grid(True)
+
 plt.show()
 

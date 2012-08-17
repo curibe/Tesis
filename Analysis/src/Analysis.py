@@ -61,3 +61,10 @@ def TisserandC(x,T,Type):
         return np.sqrt(1-(AJ/(4*x))*(T-AJ/x)**2)
     if Type=="Hyperbolic":
         return np.sqrt(1+(AJ/(4*x))*(T-AJ/x)**2)
+
+
+def TISSERAND(a,e,Type):
+    if Type=="Elliptical":
+        return AJ/a + 2*np.sqrt(a*(1-e**2)/AJ)
+    if Type=="Hyperbolic":
+        return AJ/a + 2*np.sqrt(a*(e**2-1)/AJ)
