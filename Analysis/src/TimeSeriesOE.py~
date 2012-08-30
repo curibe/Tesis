@@ -1,0 +1,25 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+import commands as cm
+from Analysis import *
+
+
+
+
+#===========================
+# PARAMETERS
+#===========================
+Nbins=100.0
+rangeA={'Min':0,'Max':30}
+NameFileOE="OrbElms_SUN.orb"
+NameFileT="Tisserand.dat"
+
+#===========================
+# LOADING FILES
+#===========================
+#***** Orbital Elements *******
+filenameOE=SrcDir+NameFileOE
+a,Q,e,inc=np.loadtxt(filenameOE, usecols=[0,1,2,3],unpack=True)
+
+
