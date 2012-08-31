@@ -31,6 +31,7 @@ using namespace std;
 
 
 
+
 /**************************************/
 /* This template shows the power of   */
 /* C++ templates. This function will  */
@@ -154,19 +155,26 @@ double Tisserand(double rp, double e, double I)
 
 double* ChangeSR(double St1[7], double St2[7]){
 
-  double x[6];
+  double x[7];
   
-  x[0]=St1[1]-St2[1]; x[1]=St1[2]-St2[2]; x[2]=St1[3]-St2[3];
-  x[3]=St1[4]-St2[4]; x[4]=St1[5]-St2[5]; x[5]=St1[6]-St2[6];
+  x[0]=St1[0]
+  x[1]=St1[1]-St2[1]; x[2]=St1[2]-St2[2]; x[3]=St1[3]-St2[3];
+  x[4]=St1[4]-St2[4]; x[3]=St1[5]-St2[5]; x[6]=St1[6]-St2[6];
   return (double *)x;
 }
 
-double* ChangeUnit(double St[7]){
-
-  St[0]*=DAYS;
-  St[1]*=AU; St[2]*=AU; St[3]*=AU;
-  St[4]*=AU/DAYS; St[5]*=AU/DAYS; St[6]*=AU/DAYS;
+double* ChangeUnit(double St[7],char *type){
   
-  return (double *)St
+  if(!strcmp(type,"AU-DAYS")){
+    St[0]*=DAYS;
+    St[1]*=AU; St[2]*=AU; St[3]*=AU;
+    St[4]*=AU/DAYS; St[5]*=AU/DAYS; St[6]*=AU/DAYS;
+  }
+  if(!strcmp(type,"AU-YEARS")){
+    St[0]*=YEARS;
+    St[1]*=AU; St[2]*=AU; St[3]*=AU;
+    St[4]*=AU/YEARS; St[5]*=AU/YEARS; St[6]*=AU/YEARS;
+  }
+  return (double *)St;
 
 }
