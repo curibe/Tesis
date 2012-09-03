@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 import matplotlib.pyplot as plt
 import os
@@ -36,7 +37,7 @@ NameFile="CaptureTime.dat"
 #==========================
 # READING FILE
 #==========================
-filename=SrcDir+NameFile
+filename=AnalDir+NameFile
 Year=np.loadtxt(filename, usecols=[4])
 
 

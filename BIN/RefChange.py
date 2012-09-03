@@ -21,6 +21,7 @@ Principal=getdir()
 InitDir=Principal+"/Cond_Iniciales/"
 BinDir=Principal+"/BIN/"
 RunDir=Principal+"/RUNDIR/"
+TestDir=Principal+"/TEST/RotRef/"
 
 cmd="ls -d "+RunDir+"* | wc -l"
 Ndir=int(get(cmd))

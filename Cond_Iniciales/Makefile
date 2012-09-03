@@ -1,34 +1,40 @@
 CC = g++
+CFLAGS_OPT=-O4
+SPICEPATH=../UTILPROG/cspice
+CPPFLAGS=$(CFLAGS_OPT) -I. -I$(SPICEPATH)/include
+CSPICE_LIBDIR=$(SPICEPATH)/lib64
+PROGS=Cond_Ini.out
 
-LFLAGS= -L/usr/lib -lgsl -lgslcblas /usr/local/Orbital/cspice/lib/cspice.a /usr/local/Orbital/cspice/lib/csupport.a -lm  -L/usr/local/Orbital/gfortran/lib -lpthread -ldl  -lgcc_s
-#/usr/local/Orbital/ipopt/lib/libipopt.a
-CFLAGS=  -c -Wall -O4 -I. -I/usr/include -I/usr/local/Orbital/cspice/include  -I/usr/local/Orbital/gsl/include/gsl -I/usr/local/Orbital/PIgsl/include  -I/usr/local/Orbital/include
-
-#-I/usr/local/Orbital/ipopt/include -I/usr/local/Orbital/ipopt/include/coin
-
-# CC = gcc
-#CSPICEDIR = /usr/local
-#CFLAGS = -g -c -Wall  -I$(CSPICEDIR)/include/cspice
-#LFLAGS =-lm -lgsl -lgslcblas $(CSPICEDIR)/lib/cspice.a $(CSPICEDIR)/lib/csupport.a
+CSPICE_LIBS=$(CSPICE_LIBDIR)/cspice.a $(CSPICE_LIBDIR)/csupport.a
+LFLAGS=-lm $(CSPICE_LIBS)
 
 
-EXE = Cond_Ini
+# EXE = Cond_Ini
 # EXE= JupiterSpice
 
-all: clean $(EXE) #run
+# show:
+# 	@echo "Compiling"
 
-$(EXE):
-	$(CC) $(CFLAGS) $@.cpp -o $@.o
-	$(CC) $@.o $(LFLAGS) -o $@
+all:$(PROGS)
+	@echo "COMPILING...." $^
+
+
+%.out:%.o
+	${CC} $< ${LFLAGS} -o $@
+	cp -rf $@ $(@:.out=)
+
+# $(EXE):
+# 	$(CC) $(CFLAGS) $@.cpp -o $@.o
+# 	$(CC) $@.o $(LFLAGS) -o $@
 
 clean:
-	rm -rf *.o $(EXE) *~
+	rm -rf *.o $(PROGS) *~
 
-cleanbc:
-	rm -rf *.o *~ *.pos JupiterPos.dat
+# cleanbc:
+# 	rm -rf *.o *~ *.pos JupiterPos.dat
 
-run:
-	./$(EXE)
+# run:
+# 	./$(EXE)
 
 plot:
 	gnuplot script.gpl

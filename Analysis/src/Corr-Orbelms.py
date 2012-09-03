@@ -1,7 +1,8 @@
-import numpy as np
-import matplotlib.pyplot as plt
-import os
-import commands as cm
+# -*- coding: utf-8 -*-
+#import numpy as np
+#import matplotlib.pyplot as plt
+#import os
+#import commands as cm
 from Analysis import *
 
 #===========================
@@ -17,10 +18,10 @@ NameFileT="Tisserand.dat"
 # LOADING FILES
 #===========================
 #***** Orbital Elements *******
-filenameOE=SrcDir+NameFileOE
+filenameOE=AnalDir+NameFileOE
 a,Q,e,inc=np.loadtxt(filenameOE, usecols=[0,1,2,3],unpack=True)
 #***** Tisserand Parameter ******
-filenameT=SrcDir+NameFileT
+filenameT=AnalDir+NameFileT
 #Tiss=np.loadtxt(filenameT,usecols=[5])
 A,Ex,I,Tiss=np.loadtxt(filenameT,usecols=[0,2,3,5],unpack=True)
 
@@ -188,7 +189,7 @@ TvsE.grid(True)
 
 
 #*****************************************************
-#        TISSERAND PARAMETER VS ECCENTRICITY
+#        TISSERAND PARAMETER VS INCLINATION
 #*****************************************************
 fig8=plt.figure()
 TvsI=fig8.add_subplot(111)

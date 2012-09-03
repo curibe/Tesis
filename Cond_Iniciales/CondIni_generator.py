@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import numpy as np
 from numpy import linalg as LA
@@ -20,6 +21,12 @@ DEG2RAD=lambda x:x*pi/180.0
 
 # Variables que se necesitan:
 # omega, et_obs,Rprom,beta
+
+
+#################################
+# PARAMETROS TEMPORALES
+#################################
+ET0,ETF,Tmin,ET_obs,DeltaT=np.loadtxt("TimeIni.txt")
 
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -396,6 +403,7 @@ ShowInformation(xmA,xmI,xmE,VA,VEL,vE)
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 icond = open("StateInit.state","w")
+#Angles = open("Angles.ini","w")
 X=np.loadtxt("JupiterPos.dat")
 et=X[0:,0]
 XJe=X[:,1:4]

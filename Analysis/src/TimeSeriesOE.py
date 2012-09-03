@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 import matplotlib.pyplot as plt
 import os
@@ -5,34 +6,63 @@ import commands as cm
 from Analysis import *
 from Colors import *
 
+#*********************************
+# Frame of simulation in order to
+# choose the unit system.
+# It can be: AU,RSOI,RJUP 
+#*********************************
+FRAME="RJUP"
 
-
+Name=''
 #===========================
 # PARAMETERS
 #===========================
 Nbins=100.0
 rangeA={'Min':0,'Max':30}
 #NameFileOE="OrbElms_SUN.orb"
-Name=argv[1]
+Name=argv[1]  # Name of file
+print Name
 Ndump="salida.txt"
-pathName=SrcDir+Name
-pathNdump=SrcDir+Ndump
+pathName=AnalDir+Name
+pathNdump=AnalDir+Ndump
+
 
 #============================
 # READING FILE
 #============================
-Nl=int(get("wc -l %s | gawk '{print $1}'"%pathName))
-system("tail -n %d %s > %s"%(Nl-4,pathName,Ndump))
-NameFileOE=Ndump
+#Nl=int(get("wc -l %s | gawk '{print $1}'"%pathName))
+#system("tail -n %d %s > %s"%(Nl-4,pathName,pathNdump))
 
 
 #===========================
 # LOADING FILES
 #===========================
 #***** Orbital Elements *******
-filenameOE=SrcDir+NameFileOE
-t,a,e,i,q,Q=np.loadtxt(filenameOE,usecols=[0,1,2,3,7,8],unpack=True)
+if FRAME=="AU":
+  print "in AU"
+  Nl=int(get("wc -l %s | gawk '{print $1}'"%Name))
+  system("tail -n %d %s > %s"%(Nl-4,Name,pathNdump))
+  t,a,e,i,q,Q=np.loadtxt(pathNdump,usecols=[0,1,2,3,7,8],unpack=True)
+  
+if FRAME=="RJUP":
+  print "in RJUP"
+  Nl=int(get("wc -l %s | gawk '{print $1}'"%Name))
+  system("tail -n %d %s > %s"%(Nl-4,Name,pathNdump))
+  t,a,e,i,q,Q=np.loadtxt(pathNdump,usecols=[0,1,2,3,7,8],unpack=True) # This Name must include the path
+  a=a*AU/RJUP
+  q=q*AU/RJUP
+  Q=Q*AU/RJUP
+  
+if FRAME=="RSOI":
+  print "in RSOI"
+  Nl=int(get("wc -l %s | gawk '{print $1}'"%Name))
+  system("tail -n %d %s > %s"%(Nl-4,Name,pathNdump))
+  t,a,e,i,q,Q=np.loadtxt(pathNdump,usecols=[0,1,2,3,7,8],unpack=True) # This Name must include the path
+  a=a/RSOI
+  q=q/RSOI
+  Q=Q/RSOI
 #t,a,e,i,peri,node,M,q,Q,Long,f=np.loadtxt(filenameOE,unpack=True)
+
 
 
 
@@ -41,8 +71,13 @@ t,a,e,i,q,Q=np.loadtxt(filenameOE,usecols=[0,1,2,3,7,8],unpack=True)
 #                     PLOTS
 #=======================================================
 
+#**************************
+# PLOT PARAMETERS
+#**************************
+dy=6
+
 fig=plt.figure()
-plt.subplots_adjust(hspace=0.001)
+plt.subplots_adjust(hspace=0.1)
 
 #****************************
 #  SEMIMAJOR AXIS
@@ -53,14 +88,13 @@ A.plot(t,a)
 ylim=A.get_ylim()
 yticks=[]
 lyticks=[]
-for ytick in np.linspace(ylim[0],ylim[-1],10):
+for ytick in np.linspace(ylim[0],ylim[-1],dy):
     yticks+=[ytick]
-    lyticks+=["%0.3e"%ytick]
-lyticks[0]=''
+    lyticks+=["%0.4e"%ytick]
+#lyticks[0]=''
 A.set_yticks(yticks[:-1])
 A.set_yticklabels(lyticks[:-1],size=9)
 #******* Labels ********
-A.set_xlabel("time (days)")
 A.set_ylabel("a (AU)",rotation='horizontal')
 #A.yaxis.set_label_coords(1.04,0.5)
 #ax.yaxis.set_ticks_position("right")
@@ -76,10 +110,10 @@ E.plot(t,e)
 ylim=E.get_ylim()
 yticks=[]
 lyticks=[]
-for ytick in np.linspace(ylim[0],ylim[-1],10):
+for ytick in np.linspace(ylim[0],ylim[-1],dy):
     yticks+=[ytick]
-    lyticks+=["%0.3e"%ytick]
-lyticks[0]=''
+    lyticks+=["%0.4e"%ytick]
+#lyticks[0]=''
 E.set_yticks(yticks[:-1])
 E.set_yticklabels(lyticks[:-1],size=10)
 #********* Labels ********
@@ -98,10 +132,10 @@ I.plot(t,i)
 ylim=I.get_ylim()
 yticks=[]
 lyticks=[]
-for ytick in np.linspace(ylim[0],ylim[-1],10):
+for ytick in np.linspace(ylim[0],ylim[-1],dy):
     yticks+=[ytick]
-    lyticks+=["%0.3e"%ytick]
-lyticks[0]=''
+    lyticks+=["%0.4e"%ytick]
+#lyticks[0]=''
 I.set_yticks(yticks[:-1])
 I.set_yticklabels(lyticks[:-1],size=10)
 #********* Labels ********
@@ -114,15 +148,15 @@ I.yaxis.set_label_position("right")
 #  APHELION
 #****************************
 RQ=fig.add_subplot(514,sharex=A)
-RQ.plot(t,i)
+RQ.plot(t,Q)
 #*****Stablishing y limits *******
 ylim=RQ.get_ylim()
 yticks=[]
 lyticks=[]
-for ytick in np.linspace(ylim[0],ylim[-1],10):
+for ytick in np.linspace(ylim[0],ylim[-1],dy):
     yticks+=[ytick]
-    lyticks+=["%0.3e"%ytick]
-lyticks[0]=''
+    lyticks+=["%0.4e"%ytick]
+#lyticks[0]=''
 RQ.set_yticks(yticks[:-1])
 RQ.set_yticklabels(lyticks[:-1],size=10)
 #********* Labels ********
@@ -140,13 +174,14 @@ Rq.plot(t,q,color=CL['Blueviolet'],marker='o',linestyle='-')
 ylim=Rq.get_ylim()
 yticks=[]
 lyticks=[]
-for ytick in np.linspace(ylim[0],ylim[-1],10):
+for ytick in np.linspace(ylim[0],ylim[-1],dy):
     yticks+=[ytick]
-    lyticks+=["%0.3e"%ytick]
-lyticks[0]=''
+    lyticks+=["%0.4e"%ytick]
+#lyticks[0]=''
 Rq.set_yticks(yticks[:-1])
 Rq.set_yticklabels(lyticks[:-1],size=10)
 #********* Labels ********
+Rq.set_xlabel("time (days)")
 Rq.set_ylabel("q (AU)",rotation='horizontal')
 #I.yaxis.set_label_coords(1.04,0.5)
 Rq.yaxis.set_label_position("right")
@@ -154,19 +189,6 @@ Rq.yaxis.set_label_position("right")
 
 xticklabels=A.get_xticklabels()+E.get_xticklabels()+I.get_xticklabels()+RQ.get_xticklabels()
 plt.setp(xticklabels,visible=False)
-
-Items=CL.items()
-#fig2=plt.figure(figsize=(5,10))
-fig2=plt.figure()
-fig2.subplots_adjust(top=0.99, bottom=0.01, left=0.2, right=0.99)
-x=np.arange(0.0,1.0,0.1)
-y=np.ones_like(x)
-for i in range(10):
-    ax=plt.subplot(10,1,i+1)
-    #plt.axis("off")
-    ax.fill_between(x,y,1.0)
-    #ax.patch.set_facecolor(Items[i][1])
-
 
 
 

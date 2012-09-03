@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from math import *
 import numpy as np
 #########################################
@@ -41,6 +42,12 @@ Rp=66854.0
 #------------------------------
 beta=9.48*pi/180   #3.05*pi/180
 
+#-------------------------------
+# Masa de Jupiter
+#-------------------------------
+MJ=1.8985082106049875e+27
+
+
 
 #############################
 # PARAMETROS DE LA MANCHA
@@ -66,15 +73,9 @@ Theta0=(180.0-36.766)*pi/180.0   # Radio Ecuatorial
 ##################################
 AlphaV=20*pi/180.
 PhiV=250*pi/180.
-Vesc=60.0
-Vmin=59.0
-Vmax=59.1
-
-
-#################################
-# PARAMETROS TEMPORALES
-#################################
-ET0,ETF,Tmin,ET_obs,DeltaT=np.loadtxt("TimeIni.txt")
+Vesc=np.sqrt(2*MJ*6.672E-11/(Req*1.0E3))/1.0E3
+Vmin=Vesc-0.1
+Vmax=Vesc+0.5
 
 
 

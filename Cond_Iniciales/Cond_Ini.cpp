@@ -137,8 +137,9 @@ int main(int argc, char *argv[])
 
 
   // Delta de Tiempo
-  double delta=(ET0-Tmin)/60.0; // 120 segundos
-
+  //double delta=(ET0-Tmin)/60.0; // 120 segundos
+  double delta;
+  delta=atof(argv[2]);
 
   cout.setf(ios::scientific);
   cout.setf(ios::showpoint);	

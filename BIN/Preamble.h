@@ -157,7 +157,7 @@ double* ChangeSR(double St1[7], double St2[7]){
 
   double x[7];
   
-  x[0]=St1[0]
+  x[0]=St1[0];
   x[1]=St1[1]-St2[1]; x[2]=St1[2]-St2[2]; x[3]=St1[3]-St2[3];
   x[4]=St1[4]-St2[4]; x[3]=St1[5]-St2[5]; x[6]=St1[6]-St2[6];
   return (double *)x;

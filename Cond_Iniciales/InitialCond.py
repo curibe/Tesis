@@ -1,9 +1,10 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import numpy as np
 import os
 import commands as cm
 from math import *
-
+from ICond import *
 
 
 #==============
@@ -24,7 +25,7 @@ TF="19 MAY 2009 00:00:00.000"
 # * Timeini.txt
 # * State vector for each Body
 #################################
-cmd="./Cond_Ini '%s'"%TF 
+cmd="./Cond_Ini.out '%s' %f"%(TF,dT)
 system(cmd)
 
 ################################
