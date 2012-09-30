@@ -25,7 +25,7 @@ TF="19 MAY 2009 00:00:00.000"
 # * Timeini.txt
 # * State vector for each Body
 #################################
-cmd="./Cond_Ini.out '%s' %f"%(TF,dT)
+cmd="./Cond_Ini '%s' %f"%(TF,dT)
 system(cmd)
 
 ################################

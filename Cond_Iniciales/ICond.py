@@ -74,8 +74,8 @@ Theta0=(180.0-36.766)*pi/180.0   # Radio Ecuatorial
 AlphaV=20*pi/180.
 PhiV=250*pi/180.
 Vesc=np.sqrt(2*MJ*6.672E-11/(Req*1.0E3))/1.0E3
-Vmin=Vesc-0.1
-Vmax=Vesc+0.5
+Vmin=Vesc
+Vmax=Vesc+0.3
 
 
 
@@ -88,5 +88,5 @@ Vmax=Vesc+0.5
 #################################
 #  STEP SIZE: TIME AND VELOCITY
 #################################
-dV = 0.001  # km/s
+dV = 0.1  # km/s
 dT = 120.0 # s
