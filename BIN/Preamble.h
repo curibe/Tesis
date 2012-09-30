@@ -178,3 +178,35 @@ double* ChangeUnit(double St[7],char *type){
   return (double *)St;
 
 }
+
+void ProgressBar(int x, int w,int n,string msg)
+{
+  
+  
+   // Calculuate the ratio of complete-to-incomplete.
+  float ratio=x/(float)n;
+  int c=ratio*w;
+	
+  printf("\033[F\033[J");
+  //fflush(stdout);
+    
+  //printf("%s %3d%% [",msg.c_str(),(int)(ratio*100));
+  printf("%s  [",msg.c_str());
+
+  // Show the load bar.
+  for(int x=0;x<=c;x++){
+    printf("=");
+  }
+
+  for(int x=c;x<w;x++)
+    printf(" ");
+  
+  printf("]  ");
+
+  // Show the percentage complete.
+  printf("%3d%% \n",(int)(ratio*100));
+  
+  //printf("\r");
+  //usleep(59000);
+
+}

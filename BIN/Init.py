@@ -39,8 +39,8 @@ ET0,ETF,Tmin,ET_obs,DeltaT=np.loadtxt(filename)
 #===========================
 # CREATING RUN DIRECTORIES
 #===========================
-com='wc ' + InitDir + 'Io.pos | cut -f 4 -d \" \"' 
-cmd='wc ' + InitDir + File + ' | cut -f 4 -d \" \"'
+com='wc ' + InitDir + 'Io.pos | gawk \'{print $1}\'' 
+cmd='wc ' + InitDir + File + ' | gawk \'{print $1}\''
 #cmd='wc '+InitDir+'/StateInit.state | cut -f 4 -d \" \"'
 NDIR=int(get(cmd))
 ND=int(get(com))

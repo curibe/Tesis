@@ -79,4 +79,4 @@ Bodyin=[
   Default: JupiterPos.dat
   location: Tesis/Cond_Iniciales
 '''
-File="StateInit.probe"
+File="StateInit.state"

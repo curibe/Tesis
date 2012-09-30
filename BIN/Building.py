@@ -3,7 +3,6 @@ import os
 import commands as cm
 from Jupiter import *
 from Config import *
-from ICond import *
 
 #==============
 # SHORCUTS
@@ -32,6 +31,7 @@ for i in range(1,Ndir+1):
     dir= RunDir + "run%d/"%i
     chdir(dir)
     system("make clean prepare build > OutRun.dump")
+    system("rm OutRun.dump")
     percent=i/float(Ndir)*100.0
     progress(30,percent,'Building  ')
     

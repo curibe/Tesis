@@ -3,7 +3,7 @@ import os, sys
 import commands as cm
 from Jupiter import *
 from Config import *
-from ICond import *
+
 
 #==============
 # SHORCUTS
