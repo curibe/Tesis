@@ -55,13 +55,13 @@ Analisis-clean:
 
 Analisis-Capture:
 	@echo "Running Capture........\n"
-	Analysis/src/CaptureT.out
+	Analysis/src/./CaptureT.out
 
 Analisis-OrbFinal:
-	Analysis/src/OE_Final_Jupiter.out
+	Analysis/src/./OE_Final_Jupiter.out
 
 Analisis-END-SUN:
-	Anlaysis/src/OE_END_SUN.out
+	Anlaysis/src/./OE_END_SUN.out
 
 
 #========================================
