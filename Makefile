@@ -14,7 +14,7 @@ Init:
 
 Building:
 	@echo "Building Simulation....."
-	python BIN/Building.py
+	time python BIN/Building.py
 	#BIN/./Build.out
 
 Run:
@@ -35,6 +35,48 @@ condini:
 
 utilprog:
 	make -s -C UTILPROG all install
+
+#============================
+# COMPILING FILES
+#============================
+compile-builds:
+	cd BIN/; g++ -lm -I. Build.cpp -o Build.out
+
+#========================================
+#   ANALYSIS RULES
+#========================================
+
+#****** Compiling ********
+Analisis-compile:
+	make  -C Analysis/src/ all
+#****** Cleaning **********
+Analisis-clean:
+	make  -C Analysis/src/ clean
+
+Analisis-Capture:
+	@echo "Running Capture........\n"
+	Analysis/src/CaptureT.out
+
+Analisis-OrbFinal:
+	Analysis/src/OE_Final_Jupiter.out
+
+Analisis-END-SUN:
+	Anlaysis/src/OE_END_SUN.out
+
+
+#========================================
+#   PLOT RULES
+#========================================
+
+Plot-Capture:
+	python Analysis/src/PlotCaptureTime.py
+
+Plot-CorrElm:
+	python Analysis/src/Corr-Orbelms.py
+
+Plot-OEDist:
+	python Analysis/src/DistOrbElm.py
+
 
 
 ####################################
