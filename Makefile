@@ -61,7 +61,7 @@ Analisis-OrbFinal:
 	Analysis/src/./OE_Final_Jupiter.out
 
 Analisis-END-SUN:
-	Anlaysis/src/./OE_END_SUN.out
+	Analysis/src/./OE_END_SUN.out
 
 
 #========================================
