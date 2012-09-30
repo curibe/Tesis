@@ -57,19 +57,19 @@ int main(int argc,char *argv[])
   cmd="tail -n " + NlinesC + pathFPOS + " > " + filedumpC;
   system(cmd.c_str());
   
-  // Creating the dump file fileP.dump from file BODY7.pos
+  // Creating the dump file fileP.dump from file BODY6.pos
   cmd="tail -n " + NlinesS + pathFSunPOS + " > " + filedumpS;
   system(cmd.c_str());
   
   
-  FPOS=fopen(filedumpC,"r");
-  OrbR=fopen(pathOrbRot,"w");
-  PosR=fopen(pathPosRot,"w");
-  SunPos=fopen(pathFSunPOS,"r");
+  Pos=fopen(pathFPOS.c_str(),"r");
+  OrbR=fopen(pathOrbRot.c_str(),"w");
+  PosR=fopen(pathPosRot.c_str(),"w");
+  SunPos=fopen(pathFSunPOS.c_str(),"r");
     
   for(i=0;i<NlC;i++){
     // Reading files
-    fscanf(FPOS,"%lf %lf %lf %lf %lf %lf %lf %*lf",&XC[0],&XC[1],&XC[2],&XC[3],&XC[4],&XC[5],&XC[6]);
+    fscanf(Pos,"%lf %lf %lf %lf %lf %lf %lf %*lf",&XC[0],&XC[1],&XC[2],&XC[3],&XC[4],&XC[5],&XC[6]);
     fscanf(SunPos,"%lf %lf %lf %lf %lf %lf %lf %*lf",&XS[0],&XS[1],&XS[2],&XS[3],&XS[4],&XS[5],&XS[6]);
     
     // Changing of reference system
@@ -111,7 +111,7 @@ int main(int argc,char *argv[])
   }
   
 
-  fclose(FPOS);
+  fclose(Pos);
   fclose(OrbR);
   fclose(PosR);
   fclose(SunPos);

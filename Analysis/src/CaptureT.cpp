@@ -27,7 +27,7 @@ int main(int argc,char *argv[])
   //******************
   File="BODY7.pos";
   Fdump="Comet.dump";
-  CaptFile = "CaptureTime.dat"
+  CaptFile = "CaptureTime.dat";
   
   //*******************
   // PATHS
@@ -49,7 +49,7 @@ int main(int argc,char *argv[])
 
   // Headfile of the text file with the capture time
   //==================================================
-  TCapture = fopen(Tissdir,"w");
+  TCapture = fopen(Captdir.c_str(),"w");
   fprintf(TCapture,"# Time Capture         Run\n");
   fprintf(TCapture,"#------------------------------------");
   //fclose(TCapture);
@@ -62,7 +62,6 @@ int main(int argc,char *argv[])
     // Path of the Description file
     Dir=Rundir+"run"+toString(i)+"/output/";
     Desc=Rundir+"run"+toString(i)+"/Description.txt";
-    
     cmd="wc -l " + Dir + File + "| gawk '{print $1}'";
     Nl=exec(cmd);
     nl=atoi(Nl.c_str());

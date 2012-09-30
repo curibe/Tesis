@@ -29,7 +29,7 @@ int main(int argc,char *argv[])
   fileORB="BODY7.orb";
   fileSun="BODY6.pos";
   fileANAL="OrbElms_SUN.orb";
-  TissName="Tisserand.dat"
+  TissName="Tisserand.dat";
   
   
   //*******************
@@ -150,7 +150,7 @@ int main(int argc,char *argv[])
     // Verifying if the comet has gotten out of the SOI
     if(distance>RSOI){
       ORB=fopen(OrbFile.c_str(),"a");
-      TISS=fopen(TissFile,"a");
+      TISS=fopen(TissFile.c_str(),"a");
       fprintf(ORB,"%16E   %16E   %16E   %16E   %16E   %16E   %16E   %16E   %16E    %4d\n",
 	      SMaxis,Aphelion,OrbElm[1],OrbElm[2],OrbElm[3],OrbElm[4],OrbElm[5],OrbElm[6],OrbElm[7],i);
       fprintf(TISS,"%16E %16E %16E %16E %14lf %4d\n",SMaxis,OrbElm[0],OrbElm[1],OrbElm[2],Tiss,i);
