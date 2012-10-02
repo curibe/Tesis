@@ -1,0 +1,13 @@
+Object 1 (Type,Obj.Class): Code BODY1, Name SUN (0,10)
+	Mass (UM = 1.988400e+30 kg): 1.000000e+00 UM, 1.988400e+30 kg
+	Radius (UL = 1.495979e+08 km): 4.652473e-03 UL, 6.960000e+05 km
+	Density (URHO = 1.000000e+03 g/cc): 1.407951e+00 URHO, 1.407951e+03 kg/m3
+	Close Encounter (UL = 1.495979e+08 km): 1.000000e+00 RH, 1.000000e+02 UL, 1.495979e+10 km
+	Frame object : BODY1
+	Mu : 2.959099e-04
+	Hill Radius (UL = 1.495979e+08 km): 1.000000e+02 UL, 1.495979e+10 km
+	Original coordinates : Cartesian
+	Cartesian position (UL=1.495979e+08 km,UT=8.640000e+04 s,UV=1.731457e+03 km/s):
+		+0.000000e+00 UL +0.000000e+00 UL +0.000000e+00 UL +0.000000e+00 UV +0.000000e+00 UV +0.000000e+00 UV
+		+0.000000e+00 km +0.000000e+00 km +0.000000e+00 km +0.000000e+00 km/s +0.000000e+00 km/s +0.000000e+00 km/s
+

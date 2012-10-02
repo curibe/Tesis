@@ -38,7 +38,7 @@ build:
 	#./compileMercury.sh
 
 run:$(PROGRAMS)
-	time ./mercury6_2.exe
+	./mercury6_2.exe
 	$(shell \
 	if [ -e "output/phase" ];\
 	then cp -rf output/phase output/prevphase;\
