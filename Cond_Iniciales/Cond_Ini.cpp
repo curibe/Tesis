@@ -29,13 +29,18 @@
 //===========================
 // LOAD KERNELS
 //===========================
-#define SPK1     "/home/cesar/Projects/JUPITER/kernels/020204_SE_JUP199.LONG.bsp"
-#define SPK2     "/home/cesar/Projects/JUPITER/kernels/de405.bsp"
-#define SPK3     "/home/cesar/Projects/JUPITER/kernels/020514_SE_SAT105.bsp"
-#define SPK4     "/home/cesar/Projects/JUPITER/kernels/new-kernels/jup230l.bsp"
-#define SPK5     "/home/cesar/Projects/JUPITER/kernels/new-kernels/de721.bsp"
-#define leap     "/home/cesar/Projects/JUPITER/kernels/naif0009.tls"
-#define leap_ut  "/home/cesar/Projects/JUPITER/kernels/naif0007.tls"
+// #define SPK1     "/home/cesar/Projects/JUPITER/kernels/020204_SE_JUP199.LONG.bsp"
+// #define SPK2     "/home/cesar/Projects/JUPITER/kernels/de405.bsp"
+// #define SPK3     "/home/cesar/Projects/JUPITER/kernels/020514_SE_SAT105.bsp"
+// #define SPK4     "/home/cesar/Projects/JUPITER/kernels/new-kernels/jup230l.bsp"
+// #define SPK5     "/home/cesar/Projects/JUPITER/kernels/new-kernels/de721.bsp"
+// #define leap     "/home/cesar/Projects/JUPITER/kernels/naif0009.tls"
+// #define leap_ut  "/home/cesar/Projects/JUPITER/kernels/naif0007.tls"
+#define SPK1     "../kernels/020204_SE_JUP199.LONG.bsp"
+#define SPK2     "../kernels/de405.bsp"
+#define SPK3     "../kernels/020514_SE_SAT105.bsp"
+#define leap     "../kernels/naif0009.tls"
+#define leap_ut  "../kernels/naif0007.tls"
 #define t_obs    "19 JUL 2009 15:06:30.00"
 
 //===============================
@@ -88,13 +93,14 @@ int main(int argc, char *argv[])
   furnsh_c(leap);
   furnsh_c(leap_ut);
 
-
-
+  
+  
   str2et_c (tinicial,&ET0);
   str2et_c (tfinal,&ETF);
   str2et_c (t_obs,&ET_obs);
   str2et_c (tmin,&Tmin);
-
+  //printf("IN Cond_Ini.cpp:\n");
+  //printf("tfinal: %s     ETF: %lf\n",tfinal,ETF);
   
   //********************************
   // OUTPUT FILE
@@ -140,7 +146,7 @@ int main(int argc, char *argv[])
   //double delta=(ET0-Tmin)/60.0; // 120 segundos
   double delta;
   delta=atof(argv[2]);
-
+  cout<<"tfinal: "<<tfinal<<"       ETF: "<<ETF<<endl;
   cout.setf(ios::scientific);
   cout.setf(ios::showpoint);	
   cout.precision(15);

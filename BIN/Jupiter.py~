@@ -286,8 +286,3 @@ def CleanFolders(path):
     #os.system("rm -r restart* close* end.sig xv.out ce.out makefile")
 	
 	
-def CopyFiles(rundir,path):
-    dataobjs=rundir + "DATAOBJECTS"
-    os.system("mkdir %s"%dataobjs)
-    os.system("cp %sBODY[1-6].* %s",path,dataobjs)
-    

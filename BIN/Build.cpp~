@@ -39,7 +39,7 @@ int main(int argc,char *argv[])
     dir= Rundir + "run" + toString(i);
     chdir(dir.c_str());
     system("make clean prepare build > OurRun.dump");
-    ProgressBar(i,30,Ndir,"Building ");
+    ProgressBar(i,30,Ndir,"Running");
   }
   
   return 0;

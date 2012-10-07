@@ -1,35 +1,23 @@
-CC=g++
-
+CPP=g++
+CFLAGS_OPT=-O4
 SPICEPATH=cspice
+CPPFLAGS=$(CFLAGS_OPT) -I. -I$(SPICEPATH)/include
 CSPICE_LIBDIR=$(SPICEPATH)/lib64
-CSPICE_LIBS=$(CSPICE_LIBDIR)/cspice.a $(CSPICE_LIBDIR)/csupport.a
-FLAGSCPP= -I. -I$(SPICEPATH)/include
-CFLAGS=-c -O4 $(FLAGSCPP)
-LFLAGS=-lm $(CSPICE_LIBS)
-
 UTILPROGS=xyz2aei.out aei2xyz.out GetState.out
 
-
+CSPICE_LIBS=$(CSPICE_LIBDIR)/cspice.a $(CSPICE_LIBDIR)/csupport.a
+LFLAGS=-lm $(CSPICE_LIBS)
 
 all:$(UTILPROGS)
 	@echo "\nCOMPILING...." $^
 
-
 install:
 	cp -rf $(UTILPROGS:.out=) ../BIN
 
-
-
 %.out:%.o
 	@echo "\nCompiling..." $@
-	$(CC) $< ${LFLAGS} -o $@
-	#cp -rf $@ $(@:.out=)
-
-%.o:%.cpp
-	@echo "\nCreation file.o ..."
-	$(CC) $< $(CFLAGS) -o $@
-
-
+	${CPP} $< ${LFLAGS} -o $@
+	cp -rf $@ $(@:.out=)
 
 clean:
 	@echo "Cleaning..."

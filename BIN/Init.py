@@ -35,7 +35,6 @@ folder=os.getcwd()
 filename=folder + "/Cond_Iniciales/TimeIni.txt"
 ET0,ETF,Tmin,ET_obs,DeltaT=np.loadtxt(filename)
 
-
 #===========================
 # CREATING RUN DIRECTORIES
 #===========================
@@ -74,7 +73,6 @@ et=np.loadtxt(InitDir+"JupiterPos.dat",usecols=[0])
 Time['Start']=np.loadtxt(InitDir+File,usecols=[0])
 #Time['Start']=np.loadtxt(InitDir+"/JupiterPos.dat",usecols=[0])
 Time['End']=ETF
-
 #%%%%%%%%%%%%%%%%%%%%%%%%
 # Loading Comet's States
 #%%%%%%%%%%%%%%%%%%%%%%%%
@@ -99,7 +97,8 @@ for i in range(NDIR):
     ofile=open("system.config","a")
     HeadConfig(Time,i+1,ofile,i)
     CentralBody(JUPITER,ofile)
-    
+    #print "Start: %g     End: %g \n"%(Time['Start'][i],Time['End'])    
+
     for cuerpo in range(len(Bodies)):
         Id=cuerpo+1
         BigBody(Bodies[cuerpo],States[cuerpo][j],Id,ofile)

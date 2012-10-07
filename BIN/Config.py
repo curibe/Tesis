@@ -16,7 +16,7 @@ Time={
     'End':0.0,
     'Step':-1E-2,
     'Output':0.5,
-    'OutputElem':3.0,
+    'OutputElem':1.0,
     'Datadumps':10,    
     }
 

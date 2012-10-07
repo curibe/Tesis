@@ -3,7 +3,7 @@ CFLAGS_OPT=-O4
 SPICEPATH=../UTILPROG/cspice
 CPPFLAGS=$(CFLAGS_OPT) -I. -I$(SPICEPATH)/include
 CSPICE_LIBDIR=$(SPICEPATH)/lib64
-PROGS=Cond_Ini.out
+PROGS=Cond_Ini.out Earth.out
 
 CSPICE_LIBS=$(CSPICE_LIBDIR)/cspice.a $(CSPICE_LIBDIR)/csupport.a
 LFLAGS=-lm $(CSPICE_LIBS)
@@ -28,7 +28,7 @@ all:$(PROGS)
 # 	$(CC) $@.o $(LFLAGS) -o $@
 
 clean:
-	rm -rf *.o $(PROGS) *~
+	rm -rf *.o $(PROGS) *~ *.dat *.pos
 
 # cleanbc:
 # 	rm -rf *.o *~ *.pos JupiterPos.dat

@@ -18,20 +18,26 @@ chdir=os.chdir
 ###########################
 # END TIME
 ###########################
-TF="19 MAY 2009 00:00:00.000"
+TF="19 FEB 2009 00:00:00.000"
+
+
+Principal=getdir()
+InitDir=Principal+"/Cond_Iniciales/"
 
 #################################
 # PREPARING INITIAL PARAMETERS:
 # * Timeini.txt
 # * State vector for each Body
 #################################
-cmd="./Cond_Ini '%s' %f"%(TF,dT)
+chdir(InitDir)
+cmd="./Cond_Ini.out '%s' %f"%(TF,dT)
 system(cmd)
 
 ################################
 # RUNNING 
 ################################
-system("./CondIni_generator.py")
+cmd="./CondIni_generator.py"
+system(cmd)
 
 
 
