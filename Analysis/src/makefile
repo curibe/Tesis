@@ -1,7 +1,7 @@
 CC=g++
-CFLAGS_OPT=-O4
+CFLAGS_OPT=-O4 -g
 CPPFLAGS=$(CFLAGS_OPT) -I.
-PROGRAMS=CaptureT.out OE_END_SUN.out OE_Final_Jupiter.out OrbElm_Jup2Sun.out
+PROGRAMS=CaptureT.out OE_END_SUN.out OE_Final_Jupiter.out OrbElm_Jup2Sun.out EQCoord.out
 LFLAGS=-lm
 
 all:$(PROGRAMS)

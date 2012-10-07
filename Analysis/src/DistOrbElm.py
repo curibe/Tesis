@@ -18,7 +18,7 @@ filenameOE=AnalDir+NameFileOE
 a,Q,e,inc=np.loadtxt(filenameOE, usecols=[0,1,2,3],unpack=True)
 #***** Tisserand Parameter ******
 filenameT=AnalDir+NameFileT
-Tiss=np.loadtxt(filenameT,usecols=[5])
+Tiss=np.loadtxt(filenameT,usecols=[4])
 
 
 #**************************
@@ -74,22 +74,22 @@ else:
 BinQ=np.arange(MinQ,MaxQ+dxQ/2.0,dxQ)
 dimQ=len(BinQ-1)
 inQ=BinQ.searchsorted(Q.max())
-Qlim=BinQ[inQ]
+#Qlim=BinQ[inQ]
 #************ Eccentricity *************
 BinE=np.arange(MinE,MaxE+dxE/2.0,dxE)
 dimE=len(BinE-1)
 inE=BinE.searchsorted(e.max())
-Elim=BinE[inE]
+#Elim=BinE[inE]
 #************ Inclination **************
 BinI=np.arange(MinI,MaxI+dxI/2.0,dxI)
 dimI=len(BinI-1)
 inI=BinI.searchsorted(inc.max())
-Ilim=BinI[inI]
+#Ilim=BinI[inI]
 #************ Tisserand ***************
 BinT=np.arange(MinT,MaxT+dxT/2.0,dxT)
 dimT=len(BinT-1)
 inT=BinT.searchsorted(Tiss.max())
-Tlim=BinI[inT]
+#Tlim=BinI[inT]
 
 
 #=====================================================================

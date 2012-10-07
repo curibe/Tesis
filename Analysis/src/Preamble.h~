@@ -15,17 +15,15 @@
 // PRECOMPILATED
 //#####################
 #define HOURS 3600.0
-#define DAYS 86400.0
-#define YEARS 31557600.0 // seconds
-#define AU 1.49597870700e8
-#define UV 1.49597870700e8/86400.0
+#define DAYS 24*HOURS
+#define YEARS 365.25*DAYS
+#define AU 1.49597870700e8 
 #define RSOI 4.8305783e7
 #define RJUP 71492.0
 #define MUSUN 1.328182e+11
 #define MUJUP 1.268113e+08
 #define IncJ 0.02276  /*In radians.  Inclination of jupiter respect to ecliptic. (1.304 deg)*/
-#define aJ 7.7832780168E+08 //5.2028*AU
-#define epsilonE 23.45*(M_PI)/180.0
+#define aJ 5.2028*AU
 #define RAD2DEG 180.0/M_PI
 #define DEG2RAD M_PI/180.0
 
@@ -160,18 +158,10 @@ double* ChangeSR(double St1[7], double St2[7]){
 
   double x[7];
   
-  //printf("ROUTINE St1:  %e %e %e %e %e %e %e\n",St1[0],St1[1],St1[2],St1[3],St1[4],St1[5],St1[6]);
-  //printf("ROUTINE St2:  %e %e %e %e %e %e %e\n",St2[0],St2[1],St2[2],St2[3],St2[4],St2[5],St2[6]);
-  //printf("ROUTINE St1-St2:  %e %e %e %e %e %e %e\n",St1[0],St1[1]-St2[1],St1[2]-St2[2],St1[3]-St2[3],St1[4]-St2[4],St1[5]-St2[5],St1[6]-St2[6]);
   x[0]=St1[0];
-  x[1]=St1[1]-St2[1]; 
-  x[2]=St1[2]-St2[2]; 
-  x[3]=St1[3]-St2[3];
-  x[4]=St1[4]-St2[4]; 
-  x[5]=St1[5]-St2[5]; 
-  x[6]=St1[6]-St2[6];
-  //printf("ROUTINE x:  %e %e %e %e %e %e %e\n",x[0],x[1],x[2],x[3],x[4],x[5],x[6]);
-  return x;
+  x[1]=St1[1]-St2[1]; x[2]=St1[2]-St2[2]; x[3]=St1[3]-St2[3];
+  x[4]=St1[4]-St2[4]; x[3]=St1[5]-St2[5]; x[6]=St1[6]-St2[6];
+  return (double *)x;
 }
 
 
@@ -197,43 +187,8 @@ double* ChangeUnit(double St[7],char *type){
   if(!strcmp(type,"au-days")){
     St[0]/=DAYS;
     St[1]/=AU; St[2]/=AU; St[3]/=AU;
-    St[4]/=(AU/DAYS); St[5]/=(AU/DAYS); St[6]/=(AU/DAYS);
+    St[4]/=(AU/YEARS); St[5]/=(AU/YEARS); St[6]/=(AU/YEARS);
   }
-  return St;
+  return (double *)St;
 
-}
-
-double* Ecl2Eq(double XECL[7]){
-
-  double XEQ[3];
-  
-  XEQ[0]=XECL[0];
-  XEQ[1]=XECL[1]*cos(epsilonE)-XECL[2]*sin(epsilonE);
-  XEQ[2]=XECL[1]*sin(epsilonE)+XECL[2]*cos(epsilonE);
-
-  return XEQ;
-
-}
-
-
-double Atan(double x,double y)
-{
-
-  double r,alpha,theta;
-  
-  alpha=atan(y/x);
-  //Cuadrante I
-  theta=alpha;
-  
-  //Cuadrante II
-  if(x<0.0 && y>0.0) theta=M_PI-fabs(alpha);
-  
-  //Cuadrante III
-  if(x<0.0 && y<0.0) theta=M_PI+alpha;
-  
-  //Cuadrante IV
-  if(x>0.0 && y<0.0) theta=2*M_PI-fabs(alpha);
-  
-  return theta;
-  
 }

@@ -1,0 +1,184 @@
+[Breakpoint 0]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 1]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 10]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 11]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 12]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 13]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 14]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 15]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 16]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 17]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 18]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 19]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 2]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 20]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 21]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 22]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 23]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 24]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 25]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 26]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 27]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 28]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 29]
+Address=0x403850
+Enabled=true
+Temporary=false
+
+[Breakpoint 3]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 30]
+Enabled=true
+File=/home/cesar/Projects/Tesis/Analysis/src/OE_END_SUN.cpp
+Line=71
+Temporary=false
+
+[Breakpoint 31]
+Enabled=true
+File=/home/cesar/Projects/Tesis/Analysis/src/OE_END_SUN.cpp
+Line=134
+Temporary=false
+
+[Breakpoint 4]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 5]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 6]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 7]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 8]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[Breakpoint 9]
+Address=0x402c4e
+Enabled=true
+Temporary=false
+
+[General]
+DebuggerCmdStr=
+DriverName=GDB
+FileVersion=1
+OptionsSelected=
+ProgramArgs=
+TTYLevel=7
+WorkingDirectory=
+
+[Memory]
+ColumnWidths=80,0
+NumExprs=0
+
+[Watches]
+Expr0=Time
+Expr1=Dir
+Expr2=XYZ2AEI
+Expr3=Tini
+Expr4=State
+Expr5=State[0]
+Expr6=out.c_str()
+Expr7=out

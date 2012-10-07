@@ -6,8 +6,8 @@
 int main(int argc,char *argv[])
 {
 
-  int i;
-  double *XC,*XS,*X,NlC,NlS,time;
+  int i,NlC,NlS;
+  double XC[7],XS[7],*X,*XD,time;
   double *OrbElm,SMaxis,Aphelion;
 
   string Principal,Outdir,Bindir;
@@ -15,7 +15,7 @@ int main(int argc,char *argv[])
   string FPOS,FSunPOS,fileORB_rot,filePOS_rot,filedumpS,filedumpC;
   string pathFPOS,pathOrbRot,pathPosRot,pathFSunPOS;
   string NlinesS,NlinesC,xyz2aei,out;
-  char strn[50];
+  char strn[200];
 
   FILE *Pos,*OrbR,*PosR,*SunPos;  
 
@@ -54,30 +54,36 @@ int main(int argc,char *argv[])
   
   
   // Creating the dump file fileP.dump from file BODY7.pos
-  cmd="tail -n " + NlinesC + pathFPOS + " > " + filedumpC;
+  cmd="tail -n " + toString(NlC-4) + " " + pathFPOS + " > " + filedumpC;
   system(cmd.c_str());
   
   // Creating the dump file fileP.dump from file BODY6.pos
-  cmd="tail -n " + NlinesS + pathFSunPOS + " > " + filedumpS;
+  cmd="tail -n " + toString(NlS-4) + " " + pathFSunPOS + " > " + filedumpS;
   system(cmd.c_str());
-  
-  
-  Pos=fopen(pathFPOS.c_str(),"r");
+  //cout<<"cmd: "<<cmd<<endl;
+  //*
+  Pos=fopen(filedumpC.c_str(),"r");
   OrbR=fopen(pathOrbRot.c_str(),"w");
   PosR=fopen(pathPosRot.c_str(),"w");
-  SunPos=fopen(pathFSunPOS.c_str(),"r");
+  SunPos=fopen(filedumpS.c_str(),"r");
     
   for(i=0;i<NlC;i++){
     // Reading files
     fscanf(Pos,"%lf %lf %lf %lf %lf %lf %lf %*lf",&XC[0],&XC[1],&XC[2],&XC[3],&XC[4],&XC[5],&XC[6]);
     fscanf(SunPos,"%lf %lf %lf %lf %lf %lf %lf %*lf",&XS[0],&XS[1],&XS[2],&XS[3],&XS[4],&XS[5],&XS[6]);
     
+    printf("XC:  %e %e %e %e %e %e %e\n",XC[0],XC[1],XC[2],XC[3],XC[4],XC[5],XC[6]);
+    printf("XS:  %e %e %e %e %e %e %e\n",XS[0],XS[1],XS[2],XS[3],XS[4],XS[5],XS[6]);
+    printf("XC-XS:  %e %e %e %e %e %e %e\n",XC[0],XC[1]-XS[1],XC[2]-XS[2],XC[3]-XS[3],XC[4]-XS[4],XC[5]-XS[5],XC[6]-XS[6]);
+    
     // Changing of reference system
-    X=ChangeSR(XC,XS);
-    
+    XD=ChangeSR(XC,XS);
+    printf("XD:  %e %e %e %e %e %e %e\n",XD[0],XD[1],XD[2],XD[3],XD[4],XD[5],XD[6]);
     // Changin unity to kg,km,s
-    X=ChangeUnit(X,"AU-DAYS");
+    X=ChangeUnit(XD,"AU-DAYS");
+    printf("X:   %e %e %e %e %e %e %e\n",X[0],X[1],X[2],X[3],X[4],X[5],X[6]);
     
+    //*
     // Converting form xyz to aei
     sprintf(strn,"%e %e %e %e %e %e %e %e",X[1],X[2],X[3],X[4],X[5],X[6],X[0],MUSUN);
     xyz2aei = Bindir + "/./state2elem " + strn;
@@ -95,7 +101,9 @@ int main(int argc,char *argv[])
     SMaxis=SMaxis/AU;
     X=ChangeUnit(X,"au-days");
     OrbElm[0]=OrbElm[0]/AU;
-    
+    printf("X (AU,AU/DAYS):   %e %e %e %e %e %e %e\n",X[0],X[1],X[2],X[3],X[4],X[5],X[6]);
+    printf("********************************************************************\n");
+
     //Converting from rad to deg
     OrbElm[2]=OrbElm[2]*RAD2DEG; // inclination
     OrbElm[3]=OrbElm[3]*RAD2DEG; // lnode
@@ -105,9 +113,9 @@ int main(int argc,char *argv[])
     // Saving State Vector respect to the sun
     fprintf(PosR,"%12.6lf %16E %16E %16E %16E %16E %16E\n",X[0],X[1],X[2],X[3],X[4],X[5],X[6]);
     // Saving Orbital elements respect to the sun
-    fprintf(OrbR," %12.6lf %16E  %16E  %16E  %16E  %16E  %16E  %16E  %16E\n",X[0],SMaxis,OrbElm[1],OrbElm[2],OrbElm[3],
+    fprintf(OrbR," %12.6lf %16E  %16E  %16E  %16E  %16E  %16E  %16E  %16E  %16E\n",X[0],SMaxis,OrbElm[0],OrbElm[1],OrbElm[2],OrbElm[3],
 	    OrbElm[4],OrbElm[5],OrbElm[0],Aphelion);    
-    
+    //*/
   }
   
 

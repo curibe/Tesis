@@ -38,7 +38,7 @@ NameFile="CaptureTime.dat"
 # READING FILE
 #==========================
 filename=AnalDir+NameFile
-Year=np.loadtxt(filename, usecols=[4])
+Year=np.loadtxt(filename, usecols=[0])
 
 
 #********************
@@ -62,6 +62,7 @@ CapT=fig.add_subplot(111)
 #NN,b,p=plt.hist(Year,bins=BINS,weights=np.zeros_like(Year)+1./Year.size)     # Normalized to 1
 #N,bins,patches=CapT.hist(Year,BINS,normed=False,facecolor='blue',alpha=0.75)
 N,bins=np.histogram(Year,BINS)
+print "N: %lf"%N.sum()
 Hist=N/float(N.sum())
 CapT.bar(BINS[:-1],Hist,dx,alpha=0.8)
 CapT.set_xlim([Min,rlim])

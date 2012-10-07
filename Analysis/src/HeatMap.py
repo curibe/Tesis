@@ -53,7 +53,7 @@ for i in range(len(D)-1):
 fig1=plt.figure()
 #cs1=plt.contourf(X,Y,Z,cmap=cm.gray)
 #cs1=plt.contourf(X,Y,Z,cmap=cm.hot,alpha=0.9)
-im=plt.imshow(Z, interpolation='bilinear', cmap=cm.pink,origin='lower', extent=[Amin,Amax,Dmin,Dmax])
+im=plt.imshow(Z, interpolation='bilinear', cmap=cm.bone,origin='lower', extent=[Amin,Amax,Dmin,Dmax])
 CS = plt.contour(X, Y, Z,colors='y')
 plt.clabel(CS, fontsize=9, inline=2)
 plt.colorbar(im)

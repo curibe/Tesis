@@ -51,7 +51,7 @@ int main(int argc,char *argv[])
   //==================================================
   TCapture = fopen(Captdir.c_str(),"w");
   fprintf(TCapture,"# Time Capture         Run\n");
-  fprintf(TCapture,"#------------------------------------\n");
+  fprintf(TCapture,"#------------------------------------");
   //fclose(TCapture);
 
     
@@ -77,14 +77,12 @@ int main(int argc,char *argv[])
     //printf("cmd: %s\n",cmd.c_str());
 
 
-    NameF=Dir+Fdump;
-    printf("NameF: %s\n",NameF.c_str());
+    NameF=Dir+File;
     file = fopen(NameF.c_str(),"r");
     for(int j=0;j<=nl-4;j++){
       fscanf(file,"%lf %lf %lf %lf %lf %lf %lf %lf",&Time,&State[0],&State[1],&State[2],&State[3],
 	     &State[4],&State[5],&Distance);
-      //printf("Time: %lf     Distance: %E    RSOI(AU): %E\n",Time,Distance,RSOI/AU);
-      if(Distance>RSOI/AU){
+      if(Distance>RSOI){
 	Tcapture = (Tini+Time)/365.25 + 2000;
 	//TCapture=fopen("Capture.dat","a");
 	fprintf(TCapture,"%lf   %d\n",Tcapture,i);
