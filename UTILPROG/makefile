@@ -16,7 +16,7 @@ all:$(UTILPROGS)
 
 
 install:
-	cp -rf $(UTILPROGS:.out=) ../BIN
+	cp -rf $(UTILPROGS) ../BIN
 
 
 
@@ -35,4 +35,4 @@ clean:
 	@echo "Cleaning..."
 	rm -rf *.out *~
 	rm -rf $(UTILPROGS:.out=)
-	cd ../BIN;rm -rf $(UTILPROGS:.out=)
+	cd ../BIN;rm -rf $(UTILPROGS:.out=) $(UTILPROGS)

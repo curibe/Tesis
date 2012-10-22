@@ -1,7 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <string>
 #include <math.h>
+#include <iostream>
+#include <cstring>
+#include <sstream>
+#include <cstdlib>
+#include <fstream>
+#include <typeinfo>
+#include <unistd.h>
+#include <vector>
+
+using namespace std;
 
 //===============
 // SPICE
@@ -17,18 +27,18 @@
 #define leap_ut  "../kernels/naif0007.tls"
 
 
-struct Body
+typedef struct 
 {
-  char *Name;
-  char *ID;
-};
+  string Name;
+  string ID;
+}Body;
 
 
 int main(int argc,char *argv[])
 {
 
   
-  struct Body Planet[10];
+  Body Planet[10];
   char *OBSERVER,*TARGET;
   int i,j;
   SpiceDouble et,X[6],lt;
@@ -60,11 +70,11 @@ int main(int argc,char *argv[])
   //printf("set xrange[-0.3:0.3]\n");
   for(i=0;i<=9;i++){
     for(j=0;j<=9;j++){
-      if(!strcmp(OBSERVER,Planet[i].Name) && !strcmp(TARGET,Planet[j].Name)){
+      if(!strcmp(OBSERVER,Planet[i].Name.c_str()) && !strcmp(TARGET,Planet[j].Name.c_str())){
 	//printf("(i,j):(%d,%d)    Obs: %s    ObsID: %s        Tg: %s    TgID: %s\n",i,j,Planet[i].Name,
 	//Planet[i].ID,Planet[j].Name,Planet[j].ID);
       //for(double t=et;t<=365.25*86400;t=t+86400.0){
-	spkezr_c(Planet[j].ID,et,FRAME,ABCORR,Planet[i].ID,X,&lt);
+	spkezr_c(Planet[j].ID.c_str(),et,FRAME,ABCORR,Planet[i].ID.c_str(),X,&lt);
 	//printf("splot \"<echo \'%E %E %E\'\" w p pt 7 lc 3 \n",X[0],X[1],X[2]);
 	//printf("%E %E %E\n",X[0],X[1],X[2]);
 	
