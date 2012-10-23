@@ -63,17 +63,19 @@ int main(int argc, char *argv[])
 {
 
 //VARIABLES BASICAS
-  double Rje,Xjup[6],Xio[6],Xeur[6],Xgan[6],Xcal[6],Xsun[6],Xsat[6];
-  double DeltaT,Timp;
+  double Xjup[6],Xio[6],Xeur[6],Xgan[6],Xcal[6],Xsun[6];
+  double Xsat[6],Xur[6],Xnep[6];
+  double Timp;
   //char tinicial,tfinal,tmin;
   
   // Variables Spice
   SpiceDouble lt;  
-  SpiceDouble et,ETF,ET0,Tmin,ET_obs;
-  SpiceDouble step;
+  SpiceDouble ETF,ET0,Tmin,ET_obs;
   
+  
+
   //OUTPUT FILE
-  ofstream JupPos,IoPos,EuPos,GanPos,CaPos,SunPos,SatPos;
+  ofstream JupPos,IoPos,EuPos,GanPos,CaPos,SunPos,SatPos,UrPos,NepPos;
   
   
   //  ConstSpiceChar *t_obs="19 JUL 2009 15:06:30.000";
@@ -140,7 +142,15 @@ int main(int argc, char *argv[])
   SunPos.setf(ios::showpoint);
   SunPos.precision(15);
 
+  UrPos.open("Uranus.pos");
+  UrPos.setf(ios::scientific);
+  UrPos.setf(ios::showpoint);
+  UrPos.precision(15);
 
+  NepPos.open("Neptune.pos");
+  NepPos.setf(ios::scientific);
+  NepPos.setf(ios::showpoint);
+  NepPos.precision(15);
 
   // Delta de Tiempo
   //double delta=(ET0-Tmin)/60.0; // 120 segundos
@@ -198,6 +208,8 @@ int main(int argc, char *argv[])
       spkezr_c("504",Timp,FRAME,"NONE","599",Xcal,&lt);
       spkezr_c("10",Timp,FRAME,"NONE","599",Xsun,&lt);
       spkezr_c("6",Timp,FRAME,"NONE","599",Xsat,&lt);
+      spkezr_c("7",Timp,FRAME,"NONE","599",Xur,&lt);
+      spkezr_c("8",Timp,FRAME,"NONE","599",Xnep,&lt);
 
       JupPos<<Timp<<setw(25)<<Xjup[0]<<setw(25)<<Xjup[1]<<setw(25)<<Xjup[2]<<setw(25)
 	    <<Xjup[3]<<setw(25)<<Xjup[4]<<setw(25)<<Xjup[5]<<endl;
@@ -220,6 +232,12 @@ int main(int argc, char *argv[])
       SatPos<<Timp<<setw(25)<<Xsat[0]<<setw(25)<<Xsat[1]<<setw(25)<<Xsat[2]<<setw(25)
 	    <<Xsat[3]<<setw(25)<<Xsat[4]<<setw(25)<<Xsat[5]<<endl;
 
+      UrPos<<Timp<<setw(25)<<Xur[0]<<setw(25)<<Xur[1]<<setw(25)<<Xur[2]<<setw(25)
+	    <<Xur[3]<<setw(25)<<Xur[4]<<setw(25)<<Xur[5]<<endl;
+
+      NepPos<<Timp<<setw(25)<<Xnep[0]<<setw(25)<<Xnep[1]<<setw(25)<<Xnep[2]<<setw(25)
+	    <<Xnep[3]<<setw(25)<<Xnep[4]<<setw(25)<<Xnep[5]<<endl;
+
       //printf("t: %f\n",(Timp-Tmin)/120.0);
 
     }
@@ -231,5 +249,7 @@ int main(int argc, char *argv[])
   CaPos.close();
   SunPos.close();
   SatPos.close();
+  UrPos.close();
+  NepPos.close();
 }
 

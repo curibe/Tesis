@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS_OPT=-O4
+CFLAGS_OPT=-O4 -Wall
 SPICEPATH=../UTILPROG/cspice
 CPPFLAGS=$(CFLAGS_OPT) -I. -I$(SPICEPATH)/include
 CSPICE_LIBDIR=$(SPICEPATH)/lib64
@@ -28,7 +28,7 @@ all:$(PROGS)
 # 	$(CC) $@.o $(LFLAGS) -o $@
 
 clean:
-	rm -rf *.o $(PROGS) *~ *.dat *.pos
+	rm -rf *.o $(PROGS) $(PROGS:.out=) *~ *.dat *.pos
 
 # cleanbc:
 # 	rm -rf *.o *~ *.pos JupiterPos.dat
