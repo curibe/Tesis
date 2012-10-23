@@ -28,7 +28,8 @@ all:$(PROGS)
 # 	$(CC) $@.o $(LFLAGS) -o $@
 
 clean:
-	rm -rf *.o $(PROGS) $(PROGS:.out=) *~ *.dat *.pos
+	rm -rf *.o $(PROGS) $(PROGS:.out=) *~ 
+	rm -rf *.dat *.pos *.state *.txt
 
 # cleanbc:
 # 	rm -rf *.o *~ *.pos JupiterPos.dat
