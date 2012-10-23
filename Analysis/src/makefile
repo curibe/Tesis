@@ -21,4 +21,5 @@ all:$(PROGRAMS)
 clean:
 	@echo "Cleaning files in folder Analysis ....."
 	rm -rf *.out
+	rm -rf *.pyc *.txt *~
 	rm -rf $(PROGRAMS:.out=)
