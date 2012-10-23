@@ -5,13 +5,26 @@ import os
 import commands as cm
 from Analysis import *
 from Colors import *
+import matplotlib as mpl
+from matplotlib.ticker import MultipleLocator, FormatStrFormatter
+
+#=====================================
+# GENERAL PARAMETERS OF PLOT
+#=====================================
+mpl.rcParams['xtick.labelsize'] = 10
+majorFormatter = FormatStrFormatter('%.2lf')
+majorLocator   = MultipleLocator(5)
+
 
 #*********************************
 # Frame of simulation in order to
 # choose the unit system.
 # It can be: AU,RSOI,RJUP 
 #*********************************
-FRAME="RJUP"
+FRAME="AU"
+UNITS="years"
+dYear=10
+MaxYear=50
 
 Name=''
 #===========================
@@ -42,7 +55,7 @@ if FRAME=="AU":
   print "in AU"
   Nl=int(get("wc -l %s | gawk '{print $1}'"%Name))
   system("tail -n %d %s > %s"%(Nl-4,Name,pathNdump))
-  t,a,e,i,q,Q=np.loadtxt(pathNdump,usecols=[0,1,2,3,7,8],unpack=True)
+  t,a,e,i,q,Q=np.loadtxt(pathNdump,usecols=[0,1,4,5,2,3],unpack=True)
   
 if FRAME=="RJUP":
   print "in RJUP"
@@ -63,6 +76,8 @@ if FRAME=="RSOI":
   Q=Q/RSOI
 #t,a,e,i,peri,node,M,q,Q,Long,f=np.loadtxt(filenameOE,unpack=True)
 
+if UNITS=="years":
+  t=t/365.25
 
 
 
@@ -88,7 +103,7 @@ A.plot(t,a)
 ylim=A.get_ylim()
 yticks=[]
 lyticks=[]
-for ytick in np.linspace(ylim[0],ylim[-1],dy):
+for ytick in np.linspace(ylim[0],ylim[-1],10):
     yticks+=[ytick]
     lyticks+=["%0.4e"%ytick]
 #lyticks[0]=''
@@ -105,22 +120,26 @@ A.yaxis.set_label_position("right")
 #  ECCENTRICITY
 #****************************
 E=fig.add_subplot(512,sharex=A)
-E.plot(t,e)
+E.semilogy(t,e)
 #*****Stablishing y limits *******
-ylim=E.get_ylim()
-yticks=[]
-lyticks=[]
-for ytick in np.linspace(ylim[0],ylim[-1],dy):
-    yticks+=[ytick]
-    lyticks+=["%0.4e"%ytick]
-#lyticks[0]=''
-E.set_yticks(yticks[:-1])
-E.set_yticklabels(lyticks[:-1],size=10)
+ylim2=E.get_ylim()
+yticks2=[]
+lyticks2=[]
+for ytick in np.linspace(ylim2[0]+1E-6,ylim2[-1],dy):
+    yticks2+=[np.log10(ytick)]
+    lyticks2+=["%0.4e"%ytick]
+#yticks2[0]=''
+L1=plt.gca()
+LY=L1.get_yticks()
+E.set_yticklabels(LY[:-1],size=10)
+#E.set_yticks(yticks[:-1])
+#E.set_yticklabels(lyticks[:-1],size=10)
+#plt.yticks(size=10)
 #********* Labels ********
 E.set_ylabel("e",rotation='horizontal')
 #E.yaxis.set_label_coords(1.04,0.5)
 E.yaxis.set_label_position("right")
-
+ 
 
 
 #****************************
@@ -169,9 +188,10 @@ RQ.yaxis.set_label_position("right")
 #  PERIHELION
 #****************************
 Rq=fig.add_subplot(515,sharex=A)
-Rq.plot(t,q,color=CL['Blueviolet'],marker='o',linestyle='-')
+Rq.plot(t,q,color=CL['Blueviolet'],linestyle='-')
 #*****Stablishing y limits *******
 ylim=Rq.get_ylim()
+xlim=Rq.get_xlim()
 yticks=[]
 lyticks=[]
 for ytick in np.linspace(ylim[0],ylim[-1],dy):
@@ -181,7 +201,10 @@ for ytick in np.linspace(ylim[0],ylim[-1],dy):
 Rq.set_yticks(yticks[:-1])
 Rq.set_yticklabels(lyticks[:-1],size=10)
 #********* Labels ********
-Rq.set_xlabel("time (days)")
+if UNITS=="years":
+   Rq.set_xlabel("time (years)")
+else:
+   Rq.set_xlabel("time (days)")
 Rq.set_ylabel("q (AU)",rotation='horizontal')
 #I.yaxis.set_label_coords(1.04,0.5)
 Rq.yaxis.set_label_position("right")

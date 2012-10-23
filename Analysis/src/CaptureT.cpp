@@ -25,7 +25,7 @@ int main(int argc,char *argv[])
   //******************
   // FILES
   //******************
-  File="BODY7.pos";
+  File="BODY1.pos";
   Fdump="Comet.dump";
   CaptFile = "CaptureTime.dat";
   

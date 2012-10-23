@@ -52,7 +52,7 @@ def Count_TvsA(vec):
         if T<=3 and a>=AJ: TmAM+=1
         if T>=3 and a<=AJ: TMAm+=1
         if T>=3 and a>=AJ: TMAM+=1
-        
+    #print TmAm,TmAM,TMAm,TMAM    
     result=np.array([TmAm,TmAM,TMAm,TMAM])
     return result
 

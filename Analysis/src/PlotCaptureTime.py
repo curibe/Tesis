@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 import commands as cm
+import matplotlib.ticker as TK
 
 
 
@@ -51,7 +52,7 @@ BINS=np.arange(Min,Max+dx/2.0,dx)
 dim=len(BINS)-1
 index=BINS.searchsorted(Year.max())
 rlim=BINS[index]
-
+DX=(rlim-Min)/10.0
 
 
 #=======================
@@ -66,7 +67,9 @@ print "N: %lf"%N.sum()
 Hist=N/float(N.sum())
 CapT.bar(BINS[:-1],Hist,dx,alpha=0.8)
 CapT.set_xlim([Min,rlim])
-CapT.set_xticks(np.arange(Min,rlim,1))
+CapT.set_xticks(np.arange(Min,rlim,DX))
+x_formatter = TK.ScalarFormatter(useOffset=False)
+CapT.xaxis.set_major_formatter(x_formatter)
 CapT.set_xlabel('Time (years)')
 CapT.set_ylabel('Probability of Capture')
 plt.show()

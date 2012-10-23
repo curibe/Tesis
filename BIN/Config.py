@@ -58,6 +58,16 @@ SUN={'Name':'SUN',
      'Class':'NORMALSTAR',
      'Type':'BIG'}
 
+URANUS={'Name':'URANUS',
+        'Mass':8.6810E25,
+        'Class':'GASGIANT',
+        'Type':'BIG'}
+
+NEPTUNE={'Name':'NEPTUNE',
+         'Mass':1.0243E26,
+         'Class':'GASGIANT',
+         'Type':'BIG'}
+         
 
 #=====================================
 # OBJECTS INCLUDED IN THE SIMULATION
@@ -68,7 +78,9 @@ Bodyin=[
     'Ganymede.pos',
     'Calixto.pos',
     'Saturn.pos',
-    'Sun.pos'
+    'Sun.pos',
+    'Uranus.pos',
+    'Neptune.pos'
     ]
 
 

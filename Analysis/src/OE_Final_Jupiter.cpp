@@ -14,11 +14,14 @@ int main(int argc,char *argv[])
   string filePOS,fileORB,fileANAL;
   string Nl,NameF,pathPOS,pathORB,Dir,out;
     
-  char *CMD, *strl;
-  int Ndir,N;
-  double *State,output,*OrbElm;
+  char *strl;
+  int Ndir;
   
-  FILE *POS,*ORB;
+
+  vector<double>OrbElm;
+  vector<double>State;
+
+  FILE *ORB;
 
 
   //*******************
@@ -64,7 +67,7 @@ int main(int argc,char *argv[])
     
     // Verifying if the comet has gotten out of the SOI
     if(State[7]>RSOI){
-      printf("Run %d : has gotten out of SOI.\n");
+      printf("Run %d : has gotten out of SOI.\n",i);
       cmd = "tail -n 1 " + pathORB;
       out = exec(cmd.c_str());
       OrbElm = Split2F((char *)out.c_str());

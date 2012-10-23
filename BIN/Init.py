@@ -3,6 +3,7 @@ import os
 import commands as cm
 from Jupiter import *
 from Config import *
+from ICond import *
 
 
 
@@ -44,6 +45,11 @@ cmd='wc ' + InitDir + File + ' | gawk \'{print $1}\''
 NDIR=int(get(cmd))
 ND=int(get(com))
 #chdir(Principal)
+print "\n===================================================\n"
+print "PARAMETERS OF SIMULATIONS:"
+print "Escape Velocity (Vesc): %lf"%Vesc
+print "Minimal Velocity (Vmin): %lf\nMaximal Velocity (Vmax): %lf\ndV:  %lf"%(Vmin,Vmax,dV)
+print "Number of Simulations (NDIR):  %d\n"%(NDIR)
 system("bash DirBuild.sh %d"%NDIR)
 #chdir(Actual)
 
@@ -88,6 +94,7 @@ for body in Bodyin:
 #Bodies=[IO,EUROPA,GANYMEDE,CALIXTO,SATURN,SUN]
 #States=[Xio,Xeuropa,Xganymede,Xcalixto,Xsun]
 
+print "Creating files:\nSystem.config,Description.txt"
 
 for i in range(NDIR):
     
@@ -98,12 +105,13 @@ for i in range(NDIR):
     HeadConfig(Time,i+1,ofile,i)
     CentralBody(JUPITER,ofile)
     #print "Start: %g     End: %g \n"%(Time['Start'][i],Time['End'])    
-
+    MinorBody(Id,CometState[i],ofile)
+    
     for cuerpo in range(len(Bodies)):
-        Id=cuerpo+1
+        Id=Id+1
         BigBody(Bodies[cuerpo],States[cuerpo][j],Id,ofile)
 
-    MinorBody(Id+1,CometState[i],ofile)
+    #MinorBody(Id+1,CometState[i],ofile)
     TailConfig(ofile)
     ofile.close()
     Description(Time,i)
@@ -114,3 +122,5 @@ for i in range(NDIR):
     system(cmd)
     system(cmd2)
 
+print "...... DONE"
+print "=========================================="

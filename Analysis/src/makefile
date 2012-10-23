@@ -1,16 +1,22 @@
 CC=g++
-CFLAGS_OPT=-O4 -g
-CPPFLAGS=$(CFLAGS_OPT) -I.
-PROGRAMS=CaptureT.out OE_END_SUN.out OE_Final_Jupiter.out OrbElm_Jup2Sun.out EQCoord.out
+
+FLAGSCPP= -Wall -I.
+CFLAGS=-c -O4 $(FLAGSCPP)
 LFLAGS=-lm
 
+PROGRAMS=CaptureT.out OE_END_SUN.out OE_Final_Jupiter.out OrbElm_Jup2Sun.out EQCoord.out
+
 all:$(PROGRAMS)
-	@echo "\nCOMPILING PROGRAMS..." $^
+
 
 %.out:%.o
-	@echo "\nCreating file " $@
 	${CC} $< ${LFLAGS} -o $@
 	#cp -rf $@ $(@:.out=)
+
+%.o:%.cpp
+	@echo "\nCOMPILING FILE ..." $^
+	$(CC) $< ${CFLAGS} -o $@
+
 
 clean:
 	@echo "Cleaning files in folder Analysis ....."

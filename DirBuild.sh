@@ -37,17 +37,18 @@ for i in `seq 1 $NDIR`;
 do
     name=run$i
     ln -s $PATHDIR/$ROOTDIR/bin $PATHDIR/$MASTER/$name
-    ln -s $PATHDIR/$ROOTDIR/doc $PATHDIR/$MASTER/$name
-    ln -s $PATHDIR/$ROOTDIR/examples $PATHDIR/$MASTER/$name
+    #ln -s $PATHDIR/$ROOTDIR/doc $PATHDIR/$MASTER/$name
+    #ln -s $PATHDIR/$ROOTDIR/examples $PATHDIR/$MASTER/$name
     ln -s $PATHDIR/$ROOTDIR/util $PATHDIR/$MASTER/$name
     ln -s $PATHDIR/$ROOTDIR/$ELEMENT6 $PATHDIR/$MASTER/$name
     ln -s $PATHDIR/$ROOTDIR/$CLOSE6 $PATHDIR/$MASTER/$name
     ln -s $PATHDIR/$ROOTDIR/$MERCURY $PATHDIR/$MASTER/$name
     ln -s $PATHDIR/$ROOTDIR/element6.sh $PATHDIR/$MASTER/$name
-    ln -s $PATHDIR/$ROOTDIR/compileMercury.sh $PATHDIR/$MASTER/$name
+    #ln -s $PATHDIR/$ROOTDIR/compileMercury.sh $PATHDIR/$MASTER/$name
     ln -s $PATHDIR/$ROOTDIR/makefile $PATHDIR/$MASTER/$name
+    cp $PATHDIR/$ROOTDIR/*.exe $PATHDIR/$MASTER/$name
     #cp $PATHDIR/$ROOTDIR/Makefile $PATHDIR/$MASTER/$name/
 done
-echo -e "...... DONE\n"
+echo -e "...... DONE"
 #echo -e "PATHDIR: $PATHDIR"
 #echo $NDIR

@@ -7,8 +7,8 @@ int main(int argc,char *argv[])
 {
 
   int i,NlC,NlS;
-  double XC[7],XS[7],*X,*XD,time;
-  double *OrbElm,SMaxis,Aphelion;
+  double XC[7],XS[7],X[7],XD[7];
+  double SMaxis,Aphelion=0.0;
 
   string Principal,Outdir,Bindir;
   string cmd,r;
@@ -17,16 +17,18 @@ int main(int argc,char *argv[])
   string NlinesS,NlinesC,xyz2aei,out;
   char strn[200];
 
+  vector <double> OrbElm;
+
   FILE *Pos,*OrbR,*PosR,*SunPos;  
 
   
   //*******************
   // FILE
   //*******************
-  FPOS="BODY7.pos";
-  FSunPOS="BODY6.pos";
-  fileORB_rot = "BODY7orb.ref";
-  filePOS_rot = "BODY7pos.ref";
+  FPOS="BODY1.pos";
+  FSunPOS="BODY7.pos";
+  fileORB_rot = "BODY1orb.ref";
+  filePOS_rot = "BODY1pos.ref";
   filedumpS = "filePS.dump";
   filedumpC = "filePC.dump";
   
@@ -66,22 +68,36 @@ int main(int argc,char *argv[])
   OrbR=fopen(pathOrbRot.c_str(),"w");
   PosR=fopen(pathPosRot.c_str(),"w");
   SunPos=fopen(filedumpS.c_str(),"r");
-    
+
+
+  //===================================
+  // HEADERS OF FILE
+  //===================================
+  fprintf(PosR,"=======================================================================================================\n");
+  fprintf(PosR,"COLUMN LABELS: Time, x, y, z, vx, vy, vz \n");
+  fprintf(PosR,"Units: days, AU, AU/days\n");
+  fprintf(PosR,"=======================================================================================================\n");
+  
+  fprintf(OrbR,"=======================================================================================================\n");
+  fprintf(OrbR,"COLUMN LABELS: Time, SMaxis, Q, Rp, Ecc, Inc, LNode, ArgP, M0\n");
+  fprintf(OrbR,"Units: days, AU, Deg\n");
+  fprintf(OrbR,"=======================================================================================================\n");
+
   for(i=0;i<NlC;i++){
     // Reading files
     fscanf(Pos,"%lf %lf %lf %lf %lf %lf %lf %*lf",&XC[0],&XC[1],&XC[2],&XC[3],&XC[4],&XC[5],&XC[6]);
     fscanf(SunPos,"%lf %lf %lf %lf %lf %lf %lf %*lf",&XS[0],&XS[1],&XS[2],&XS[3],&XS[4],&XS[5],&XS[6]);
     
-    printf("XC:  %e %e %e %e %e %e %e\n",XC[0],XC[1],XC[2],XC[3],XC[4],XC[5],XC[6]);
-    printf("XS:  %e %e %e %e %e %e %e\n",XS[0],XS[1],XS[2],XS[3],XS[4],XS[5],XS[6]);
-    printf("XC-XS:  %e %e %e %e %e %e %e\n",XC[0],XC[1]-XS[1],XC[2]-XS[2],XC[3]-XS[3],XC[4]-XS[4],XC[5]-XS[5],XC[6]-XS[6]);
+    //printf("XC:  %e %e %e %e %e %e %e\n",XC[0],XC[1],XC[2],XC[3],XC[4],XC[5],XC[6]);
+    //printf("XS:  %e %e %e %e %e %e %e\n",XS[0],XS[1],XS[2],XS[3],XS[4],XS[5],XS[6]);
+    //printf("XC-XS:  %e %e %e %e %e %e %e\n",XC[0],XC[1]-XS[1],XC[2]-XS[2],XC[3]-XS[3],XC[4]-XS[4],XC[5]-XS[5],XC[6]-XS[6]);
     
     // Changing of reference system
-    XD=ChangeSR(XC,XS);
-    printf("XD:  %e %e %e %e %e %e %e\n",XD[0],XD[1],XD[2],XD[3],XD[4],XD[5],XD[6]);
+    ChangeSR(XC,XS,XD);
+    //printf("XD:  %e %e %e %e %e %e %e\n",XD[0],XD[1],XD[2],XD[3],XD[4],XD[5],XD[6]);
     // Changin unity to kg,km,s
-    X=ChangeUnit(XD,"AU-DAYS");
-    printf("X:   %e %e %e %e %e %e %e\n",X[0],X[1],X[2],X[3],X[4],X[5],X[6]);
+    ChangeUnit(XD,"AU-DAYS",X);
+    //printf("X:   %e %e %e %e %e %e %e\n",X[0],X[1],X[2],X[3],X[4],X[5],X[6]);
     
     //*
     // Converting form xyz to aei
@@ -99,10 +115,10 @@ int main(int argc,char *argv[])
     // Converting from km to AU
     Aphelion=Aphelion/AU;
     SMaxis=SMaxis/AU;
-    X=ChangeUnit(X,"au-days");
+    //ChangeUnit(X,"au-days",XN);
     OrbElm[0]=OrbElm[0]/AU;
-    printf("X (AU,AU/DAYS):   %e %e %e %e %e %e %e\n",X[0],X[1],X[2],X[3],X[4],X[5],X[6]);
-    printf("********************************************************************\n");
+    //printf("XN (AU,AU/DAYS):   %e %e %e %e %e %e %e\n",XN[0],XN[1],XN[2],XN[3],XN[4],XN[5],XN[6]);
+    //printf("********************************************************************\n");
 
     //Converting from rad to deg
     OrbElm[2]=OrbElm[2]*RAD2DEG; // inclination
@@ -111,10 +127,10 @@ int main(int argc,char *argv[])
     OrbElm[5]=OrbElm[5]*RAD2DEG; // Mean Anomaly
     
     // Saving State Vector respect to the sun
-    fprintf(PosR,"%12.6lf %16E %16E %16E %16E %16E %16E\n",X[0],X[1],X[2],X[3],X[4],X[5],X[6]);
+    fprintf(PosR,"%12.6lf %16E %16E %16E %16E %16E %16E\n",XD[0],XD[1],XD[2],XD[3],XD[4],XD[5],XD[6]);
     // Saving Orbital elements respect to the sun
-    fprintf(OrbR," %12.6lf %16E  %16E  %16E  %16E  %16E  %16E  %16E  %16E  %16E\n",X[0],SMaxis,OrbElm[0],OrbElm[1],OrbElm[2],OrbElm[3],
-	    OrbElm[4],OrbElm[5],OrbElm[0],Aphelion);    
+    fprintf(OrbR," %12.5lf %16E  %16E  %16E  %16E  %16E  %16E  %16E  %16E\n",XD[0],SMaxis,Aphelion,OrbElm[0],OrbElm[1],OrbElm[2],OrbElm[3],
+	    OrbElm[4],OrbElm[5]);    
     //*/
   }
   

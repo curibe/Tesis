@@ -13,21 +13,25 @@ int main(int argc,char *argv[])
   string Nl,NameF,pathPOS,pathORB,Dir,out,TissFile,TissName;
   string XYZ2AEI,pbr, Desc;
     
-  char *CMD, *strl, strn[200];
-  int Ndir,N;
-  double *State,output,*OrbElm,*SunS, Tiss;
-  double ET,X[6],Tini,Xs,Time, distance,SMaxis,Aphelion;
-  double uv;
+  char *strl, strn[200];
+  int Ndir;
+  double Tiss;
+  double X[6],Tini,Time, distance,SMaxis,Aphelion;
   
-  FILE *POS,*ORB,*TISS;
+
+  vector <double> State;
+  vector <double> SunS;
+  vector <double> OrbElm; 
+  
+  FILE *ORB,*TISS;
 
 
   //*************************
   // FILES
   //*************************
-  filePOS="BODY7.pos";
-  fileORB="BODY7.orb";
-  fileSun="BODY6.pos";
+  filePOS="BODY1.pos";
+  fileORB="BODY1.orb";
+  fileSun="BODY7.pos";
   fileANAL="OrbElms_SUN.orb";
   TissName="Tisserand.dat";
   
@@ -155,7 +159,7 @@ int main(int argc,char *argv[])
     ***********************************************/
 
     sprintf(strn,"%e %e %e %e %e %e %e %e",X[0],X[1],X[2],X[3],X[4],X[5],Time,MUSUN);
-    XYZ2AEI = Bindir + "./xyz2aei " +strn;
+    XYZ2AEI = Bindir + "./xyz2aei.out " +strn;
     //printf("pbr : %s\n",XYZ2AEI.c_str());
     out = exec(XYZ2AEI.c_str());
     //printf("out: %s\n",out.c_str());

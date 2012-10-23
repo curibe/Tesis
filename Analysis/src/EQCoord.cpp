@@ -13,18 +13,22 @@ int main(int argc,char *argv[])
   string Nl,NameF,pathPOS,Dir,out;
   string pbr, Desc;
     
-  char *CMD, *strl, strn[200];
-  int Ndir,N;
-  double *State,output,*XJE,*XEQ;
-  double ET,XCE[6],Tini,Time, distance;
+  char *strl, strn[200];
+  int Ndir;
+  double XEQ[3];
+  double XCE[6],Tini,Time, distance;
   double RIE,RJE,Alpha,Delta;
+
+  vector<double> State;
+  vector<double> XJE;
+
   FILE *EQF;
 
 
   //*************************
   // FILES
   //*************************
-  filePOS="BODY7.pos";
+  filePOS="BODY1.pos";
   fileANAL="Equatorial_coordinates_final.dat";
   OBSERVER="EARTH";
   TARGET="JUPITER";
@@ -97,7 +101,7 @@ int main(int argc,char *argv[])
     // Converting the time from days to JD
     Time=(Tini + State[0]);
    
-    // GET THE STATE OF JUPITER RESPECT TO THE EARTH IN _TIME_
+    // GET THE STATE OF JUPITER RESPECT TO THE EARTH IN Time
     //=========================================================
     sprintf(strn,"%e ",Time);
     getSTATE = Bindir + "./GetState.out " + OBSERVER + " "  + TARGET + " " + strn;
@@ -105,7 +109,8 @@ int main(int argc,char *argv[])
     out = exec(getSTATE.c_str());
     //printf("out: %s\n",out.c_str());
     XJE = Split2F((char *)out.c_str());
-    
+    //printf("XJE: %E %E %E %E %E %E\n",XJE[0],XJE[1],XJE[2],XJE[3],XJE[4],XJE[5]);
+    //printf("State: %E %E %E %E %E %E\n",State[1],State[2],State[3],State[4],State[5],State[6]);
     //N=sizeof(Staten);
 
     
@@ -115,29 +120,30 @@ int main(int argc,char *argv[])
     XCE[1]=State[2]+XJE[1];    XCE[4]=State[5]+XJE[4];
     XCE[2]=State[3]+XJE[2];    XCE[5]=State[6]+XJE[5];
     
-    
+    //printf("XCE: %E %E %E %E %E %E\n",XCE[0],XCE[1],XCE[2],XCE[3],XCE[4],XCE[5]);
     
     //%%%%%%%%%%%%%%%%%%%%%% SECTION III %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     // GET THE STATE RESPECT TO THE EQUATORIAL SYSTEM
     //==================================================
-    XEQ=Ecl2Eq(XCE);
-
+    Ecl2Eq(XCE,XEQ);
+    //printf("XEQ(MAIN): %E %E %E\n",XEQ[0],XEQ[1],XEQ[2]);
+    //printf("XEQ(MAIN-after): %E %E %E\n",XEQ[0],XEQ[1],XEQ[2]);
     // CALCULATING THE DISTANCE OF COMET RESPECT TO EARTH
     //=====================================================
-    RIE=sqrt(XEQ[0]*XEQ[0]+XEQ[1]*XEQ[1]+XEQ[2]*XEQ[2])/AU;
+    RIE=sqrt(XEQ[0]*XEQ[0]+XEQ[1]*XEQ[1]+XEQ[2]*XEQ[2]);
     RJE=sqrt(XJE[0]*XJE[0]+XJE[1]*XJE[1]+XJE[2]*XJE[2])/AU;
-
+    //printf("RIE: %E\n",sqrt(XEQ[0]*XEQ[0]));
 
     // CONVERTING FROM (km,s,kg) to (AU.DAYS,MJUP)
     //==================================================
-    XEQ[0]=XEQ[0]/AU;   XEQ[1]=XEQ[1]/AU;    XEQ[2]=XEQ[2]/AU;
+    //XEQ[0]=XEQ[0]/AU;   XEQ[1]=XEQ[1]/AU;    XEQ[2]=XEQ[2]/AU;
 
     // CALCULATING THE RIGTH ASCENSION AND DECLINATION
     //==================================================
     Delta=asin(XEQ[2]/RIE)*RAD2DEG;
     Alpha=Atan(XEQ[1],XEQ[0])*RAD2DEG;
-    
+    //printf("Alpha: %lf    Delta: %lf\n",Alpha,Delta);
     fprintf(EQF,"%lf %lf\n",Alpha,Delta);
        
     

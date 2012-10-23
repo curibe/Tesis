@@ -278,7 +278,7 @@ def progress(width,percent,msg):
 
 def CleanFolders(path):
     os.system("rm -r %sbin %stmp %sutil"%(path,path,path))
-    os.system("rm -r big.* param.* *.log *.dump element* mercury* close* restart* small*")
+    os.system("rm -r big.* param.* *.dump element* mercury* close* restart* small*")
     os.system("rm -r ce.out end.sig")
     os.system("rm -r files.in message.in swift.inc xv.out makefile ")
     os.system("rm -r output/*.phy")

@@ -13,7 +13,7 @@ int main(int argc,char *argv[])
   int i;
   double state[6];
   double Elms[8];
-  double et,Mu;
+  double et;
 
    // IF NUMBER OF PARAMETERS IS LESS 10
   if(argc<10){

@@ -5,8 +5,6 @@
 //##############################
 int main(int argc,char *argv[])
 {
-  char *dir1,*dir2;
-  char* CMD;
   
   string Principal,r,cmd;
   string Rundir,Bindir;
@@ -15,7 +13,7 @@ int main(int argc,char *argv[])
   
   int Ndir;
     
-  
+    
   //dir2=getcwd(dir2,50);
   
   
@@ -37,9 +35,10 @@ int main(int argc,char *argv[])
   for(int i=1;i<=Ndir;i++){
     
     dir= Rundir + "run" + toString(i);
+    printf("dir: %s\n",dir.c_str());
     chdir(dir.c_str());
-    system("make clean prepare build > OurRun.dump");
-    ProgressBar(i,30,Ndir,"Building ");
+    system("make prepare > OurRun.dump");
+    //ProgressBar(i,30,Ndir,"Building ");
   }
   
   return 0;

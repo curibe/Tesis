@@ -23,7 +23,7 @@ a,Q,e,inc=np.loadtxt(filenameOE, usecols=[0,1,2,3],unpack=True)
 #***** Tisserand Parameter ******
 filenameT=AnalDir+NameFileT
 #Tiss=np.loadtxt(filenameT,usecols=[5])
-A,Ex,I,Tiss=np.loadtxt(filenameT,usecols=[0,2,3,5],unpack=True)
+A,Ex,I,Tiss=np.loadtxt(filenameT,usecols=[0,2,3,4],unpack=True)
 
 
 
@@ -39,7 +39,7 @@ TmAM : Number of bodies with Tiss<=3.0 and a>=AJ
 TMAm : Number of bodies with Tiss>=3.0 and a<=AJ
 TMAM : Number of bodies with Tiss>=3.0 and a>=AJ
 """
-Vec=np.loadtxt(filenameT,usecols=[0,5])
+Vec=np.loadtxt(filenameT,usecols=[0,4])
 Vec[:,0]=Vec[:,0]/AU  # Vec[fila,columna]
 # **** Converting from (km,rad) to (AU,deg)******
 A=A/AU

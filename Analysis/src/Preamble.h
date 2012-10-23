@@ -48,9 +48,9 @@ string toString( T argument)
        string r;
        stringstream s;
        char str[30];
-       
+       printf("out\n");
        if(!strcmp(typeid(argument).name(),"d")){
-	 sprintf(str,"%.5lf",argument);
+	 sprintf(str,"%.5lf",(double)argument);
 	 r=string(str); 
        }//*/
        if(!strcmp(typeid(argument).name(),"i")){
@@ -84,13 +84,13 @@ std::string exec(string cmd) {
 
 
 
-double* Split2F(char* Str){
+vector<double> Split2F(char* Str){
 
 
   char *token;
   vector <double> VecStr;
-  double *Vec;
-  int N;
+  //double *Vec;
+ 
   
   //double VecStr[9];
   token = strtok(Str," \t\n");
@@ -105,9 +105,10 @@ double* Split2F(char* Str){
     i++;
   }
   
-  N=VecStr.size();
-  Vec=(double *)malloc(N*sizeof(double));
-  copy(VecStr.begin(),VecStr.end(),Vec);
+  return VecStr;
+  //N=VecStr.size();
+  //Vec=(double *)malloc(N*sizeof(double));
+  //copy(VecStr.begin(),VecStr.end(),Vec);
     
   /*
   for(int i=0;i<VecStr.size();++i){
@@ -116,14 +117,15 @@ double* Split2F(char* Str){
     } */
 
   
-  return (double*)Vec;
-  free(Vec);
+  //return (double*)Vec;
+  //free(Vec);
+  
        
 }
 
 double getSMAxis(double rp, double e){
 
-  double a;
+  double a=0.0;
   // FOR ELIPTIC AND HYPERBOLIC ORBITS
   if( e<1 || e>1) { a = fabs(rp/(1-e)); }
   // FOR PARABOLIC ORBITS
@@ -136,7 +138,7 @@ double getSMAxis(double rp, double e){
 
 double Tisserand(double rp, double e, double I)
 {
-  double a,p,T;
+  double a=0.0,p=0.0,T=0.0;
 
   //For Ecliptic and Hyperbolic Orbit
   if(e<1.0 || e>1.0)
@@ -144,7 +146,7 @@ double Tisserand(double rp, double e, double I)
       a=fabs(rp/(1-e));
       p=rp*(1+e);
       T= aJ/a + 2*sqrt(p/aJ)*cos(IncJ-I);
-      return T;
+      //return T;
     }
   // For parabolic Orbit
   if(fabs(e-1)<=1e-3)
@@ -152,14 +154,13 @@ double Tisserand(double rp, double e, double I)
       a=rp;
       p=2*rp;
       T= aJ/a + 2*sqrt(p/aJ)*cos(IncJ-I);
-      return T;
+      //return T;
     }
+
+  return T;
 }
 
-double* ChangeSR(double St1[7], double St2[7]){
-
-  double x[7];
-  
+int ChangeSR(double St1[7], double St2[7], double x[7]){
   //printf("ROUTINE St1:  %e %e %e %e %e %e %e\n",St1[0],St1[1],St1[2],St1[3],St1[4],St1[5],St1[6]);
   //printf("ROUTINE St2:  %e %e %e %e %e %e %e\n",St2[0],St2[1],St2[2],St2[3],St2[4],St2[5],St2[6]);
   //printf("ROUTINE St1-St2:  %e %e %e %e %e %e %e\n",St1[0],St1[1]-St2[1],St1[2]-St2[2],St1[3]-St2[3],St1[4]-St2[4],St1[5]-St2[5],St1[6]-St2[6]);
@@ -171,7 +172,7 @@ double* ChangeSR(double St1[7], double St2[7]){
   x[5]=St1[5]-St2[5]; 
   x[6]=St1[6]-St2[6];
   //printf("ROUTINE x:  %e %e %e %e %e %e %e\n",x[0],x[1],x[2],x[3],x[4],x[5],x[6]);
-  return x;
+  return (0);
 }
 
 
@@ -182,36 +183,40 @@ double* ChangeSR(double St1[7], double St2[7]){
 * AU-YEARS: convert from AU,YEARS to km,s
 * au-days: convert from km,s to AU,DAYS
 **************************************************/
-double* ChangeUnit(double St[7],char *type){
-  
-  if(!strcmp(type,"AU-DAYS")){
-    St[0]*=DAYS;
-    St[1]*=AU; St[2]*=AU; St[3]*=AU;
-    St[4]*=(AU/DAYS); St[5]*=(AU/DAYS); St[6]*=(AU/DAYS);
+int ChangeUnit(double St[7],string type,double ST[7]){
+
+  char *Mode;
+
+  Mode=(char *)type.c_str();
+
+  if(!strcmp(Mode,"AU-DAYS")){
+    ST[0]=St[0]*DAYS;
+    ST[1]=St[1]*AU; ST[2]=St[2]*AU; ST[3]=St[3]*AU;
+    ST[4]=St[4]*(AU/DAYS); ST[5]=St[5]*(AU/DAYS); ST[6]=St[6]*(AU/DAYS);
   }
-  if(!strcmp(type,"AU-YEARS")){
-    St[0]*=YEARS;
-    St[1]*=AU; St[2]*=AU; St[3]*=AU;
-    St[4]*=(AU/YEARS); St[5]*=(AU/YEARS); St[6]*=(AU/YEARS);
+  if(!strcmp(Mode,"AU-YEARS")){
+    ST[0]=St[0]*YEARS;
+    ST[1]=St[1]*AU; ST[2]=St[2]*AU; ST[3]=St[3]*AU;
+    ST[4]=St[4]*(AU/YEARS); ST[5]=St[5]*(AU/YEARS); ST[6]=St[6]*(AU/YEARS);
   }
-  if(!strcmp(type,"au-days")){
-    St[0]/=DAYS;
-    St[1]/=AU; St[2]/=AU; St[3]/=AU;
-    St[4]/=(AU/DAYS); St[5]/=(AU/DAYS); St[6]/=(AU/DAYS);
+  if(!strcmp(Mode,"au-days")){
+    ST[0]=St[0]/DAYS;
+    ST[1]=St[1]/AU; ST[2]=St[2]/AU; ST[3]=St[3]/AU;
+    ST[4]=St[4]/(AU/DAYS); ST[5]=St[5]/(AU/DAYS); ST[6]=St[6]/(AU/DAYS);
   }
-  return St;
+  return (0);
 
 }
 
-double* Ecl2Eq(double XECL[7]){
+int Ecl2Eq(double XECL[7],double XEQ[3]){
 
-  double XEQ[3];
   
+  //printf("XECL: %E %E %E %E %E %E\n",XECL[0],XECL[1],XECL[2],XECL[3],XECL[4],XECL[5]);
   XEQ[0]=XECL[0];
   XEQ[1]=XECL[1]*cos(epsilonE)-XECL[2]*sin(epsilonE);
   XEQ[2]=XECL[1]*sin(epsilonE)+XECL[2]*cos(epsilonE);
-
-  return XEQ;
+  //printf("XEq(Ecl2Eq): %E %E %E \n",XEQ[0],XEQ[1],XEQ[2]);
+  return (0);
 
 }
 
@@ -219,7 +224,7 @@ double* Ecl2Eq(double XECL[7]){
 double Atan(double x,double y)
 {
 
-  double r,alpha,theta;
+  double alpha,theta;
   
   alpha=atan(y/x);
   //Cuadrante I
@@ -236,4 +241,36 @@ double Atan(double x,double y)
   
   return theta;
   
+}
+
+void ProgressBar(int x, int w,int n,string msg)
+{
+  
+  
+   // Calculuate the ratio of complete-to-incomplete.
+  float ratio=x/(float)n;
+  int c=ratio*w;
+
+  printf("\033[F\033[J");
+  //fflush(stdout);
+    
+  //printf("%s %3d%% [",msg.c_str(),(int)(ratio*100));
+  printf("%s  [",msg.c_str());
+
+  // Show the load bar.
+  for(int x=0;x<=c;x++){
+    printf("=");
+  }
+
+  for(int x=c;x<w;x++)
+    printf(" ");
+  
+  printf("]  ");
+
+  // Show the percentage complete.
+  printf("%3d%% \n",(int)(ratio*100));
+  
+  //printf("\r");
+  //usleep(59000);
+
 }
