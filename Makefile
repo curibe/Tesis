@@ -129,7 +129,7 @@ condini-clean:
 	make -s -C Cond_Iniciales clean
 
 bin-clean:
-	cd BIN/; rm *.out
+	cd BIN/; rm *.out *~ *.pyc
 
 mercupy-clean:
 	make  -C MercuPy clean
